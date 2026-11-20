@@ -1,459 +1,2773 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tejiendo Caribe | Artesanía del Atlántico con Origen Verificable</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-main: #FAF6EE;
-            --card-bg: #F4ECE1;
-            --text-dark: #1B2A2F;
-            --text-muted: #5B6B70;
-            --rust: #C05638;
-            --rust-dark: #A04227;
-            --teal: #0F5C63;
-            --teal-light: #2A9D8F;
-            --green-text: #2D5A46;
-            --border-color: #E6DBCF;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="artifact-type" content="dashboard">
+  <meta name="design-style" content="terracotta">
+  <title>Tejiendo Caribe — Prototipo Web, Tienda Digital y Pasaporte QR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@1.43.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light;
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--bg-main);
-            color: var(--text-dark);
-            line-height: 1.5;
-            padding: 2.5rem 2rem;
-            max-width: 1280px;
-            margin: 0 auto;
-        }
+      /* Page and surfaces (Terracotta) */
+      --background: #f9f3eb;
+      --surface-container-low: #f3e9dc;
+      --surface-container: #ede0d0;
+      --surface-container-high: #e4d4c0;
+      --surface-card: #fcf8f2;
 
-        /* META SUPERIOR */
-        .top-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 1.2px;
-            text-transform: uppercase;
-            margin-bottom: 1.2rem;
-        }
-        .top-meta .left { color: var(--rust); }
-        .top-meta .right { color: var(--text-dark); opacity: 0.8; }
+      /* Ink */
+      --on-surface: #261b15;
+      --on-surface-variant: #57483f;
 
-        /* TÍTULO PRINCIPAL */
-        .hero-title {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 3.2rem;
-            font-weight: 700;
-            line-height: 1.15;
-            color: var(--text-dark);
-            margin-bottom: 1.2rem;
-            letter-spacing: -0.5px;
-        }
-        .hero-title span.italic-rust {
-            font-style: italic;
-            color: var(--rust);
-            font-weight: 600;
-        }
+      /* Borders */
+      --outline: #9e8a78;
+      --outline-variant: #dfd0be;
+      --outline-featured: #c98a6b;
+      --outline-emerald: #b5d6c9;
+      --outline-btn: #c4b29e;
 
-        /* DESCRIPCIÓN */
-        .hero-desc {
-            font-size: 1.05rem;
-            color: var(--text-muted);
-            max-width: 980px;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-        }
+      /* Accents */
+      --primary: #b84a24;
+      --primary-hover: #9e3d1b;
+      --on-primary: #ffffff;
+      --primary-container: #f7ebe0;
+      --on-primary-container: #7d2e12;
+      --secondary: #8f6524;
+      --secondary-container: #f5ebd6;
+      --tertiary: #1d6356;
+      --tertiary-container: #e1efe9;
+      --on-tertiary-container: #13473d;
+      --error: #b82929;
+      --on-error: #ffffff;
+      --error-container: #fae8e8;
 
-        /* CONTROLES Y BOTONES DE FILTRO */
-        .controls-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 2.5rem;
-        }
-        .pills-group {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .pill-btn {
-            background-color: #F5EFE6;
-            border: 1px solid var(--border-color);
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            cursor: pointer;
-            transition: all 0.2s ease;
-            text-decoration: none;
-        }
-        .pill-btn:hover, .pill-btn.active {
-            background-color: var(--teal);
-            color: white;
-            border-color: var(--teal);
-        }
-        .order-btn {
-            background-color: var(--rust);
-            color: white;
-            padding: 10px 22px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 12px rgba(192, 86, 56, 0.25);
-            transition: background 0.2s ease;
-        }
-        .order-btn:hover { background-color: var(--rust-dark); }
+      /* Brand Manual Tokens (Tejiendo Caribe Identity Swatches) */
+      --brand-teal: #0f5c63;
+      --brand-coral: #e4572e;
+      --brand-sun: #f2b134;
+      --brand-sea: #2a9d8f;
 
-        /* DIVISOR CON DIAMANTES */
-        .divider-diamonds {
-            text-align: center;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 2px;
-            color: var(--rust);
-            text-transform: uppercase;
-            margin: 2.5rem 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-        }
-        .divider-diamonds::before, .divider-diamonds::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background-color: #E0D5C7;
-        }
+      /* Data series */
+      --data-1: #b84a24;
+      --data-2: #1d6356;
+      --data-3: #b5893e;
+      --data-4: #8c3838;
+      --data-context: #a39384;
 
-        /* REJILLA DE 4 TARJETAS */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 18px;
-            margin-bottom: 4rem;
-        }
-        .stat-card {
-            background-color: var(--card-bg);
-            border-radius: 16px;
-            padding: 1.8rem 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 165px;
-        }
-        .stat-card .card-label {
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 1.1px;
-            color: var(--text-dark);
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-        }
-        .stat-card .card-num {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 2.6rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            margin: 0.3rem 0;
-        }
-        .stat-card .card-subtext {
-            font-size: 0.82rem;
-            color: var(--green-text);
-            font-weight: 600;
-        }
+      /* Semantic */
+      --positive: #1d6356;
+      --warning: #8f6524;
+      --focus: #b84a24;
 
-        /* SECCIÓN INFERIOR: CATALOGO & PEDIDOS */
-        .section-header {
-            margin-bottom: 2rem;
-        }
-        .section-tag {
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 1.2px;
-            color: var(--rust);
-            text-transform: uppercase;
-            margin-bottom: 0.4rem;
-        }
-        .section-title {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 2.4rem;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-        .section-title span { font-style: italic; color: var(--rust); }
+      /* Fonts */
+      --font-headline: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-label: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', monospace;
 
-        .catalog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 24px;
-        }
-        .product-card {
-            background: white;
-            border-radius: 18px;
-            padding: 2rem;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .badge-qr {
-            display: inline-block;
-            background-color: #E8F5E9;
-            color: var(--green-text);
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 5px 12px;
-            border-radius: 20px;
-            margin-bottom: 1rem;
-            border: 1px solid #C8E6C9;
-        }
-        .product-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.6rem;
-            color: var(--text-dark);
-            margin-bottom: 0.4rem;
-        }
-        .price-tag {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--rust);
-            margin: 0.8rem 0;
-        }
-        .breakdown-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-            font-size: 0.85rem;
-        }
-        .breakdown-table th, .breakdown-table td {
-            padding: 8px 10px;
-            text-align: left;
-            border-bottom: 1px solid #F0ECE6;
-        }
-        .breakdown-table th {
-            background-color: var(--teal);
-            color: white;
-            font-weight: 600;
-        }
-        .whatsapp-btn {
-            display: block;
-            width: 100%;
-            text-align: center;
-            background-color: #25D366;
-            color: white;
-            font-weight: 700;
-            padding: 14px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 1rem;
-            margin-top: 1.2rem;
-            transition: opacity 0.2s;
-        }
-        .whatsapp-btn:hover { opacity: 0.9; }
+      /* Type scale (Dashboard / Explorer) */
+      --display-size: clamp(2.15rem, 1.4rem + 2.4vw, 3.35rem);
+      --headline-size: clamp(1.45rem, 1.15rem + 0.9vw, 1.95rem);
+      --subhead-size: clamp(1.125rem, 1rem + 0.35vw, 1.35rem);
+      --body-size: clamp(0.9375rem, 0.9rem + 0.15vw, 1rem);
+      --label-size: 0.75rem;
 
-        footer {
-            text-align: center;
-            margin-top: 5rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
+      /* Spacing scale (4pt base) */
+      --space-xs: 0.25rem;
+      --space-sm: 0.5rem;
+      --space-md: 1rem;
+      --space-lg: 1.5rem;
+      --space-xl: 2.5rem;
+      --space-2xl: 4rem;
 
-        @media (max-width: 768px) {
-            .hero-title { font-size: 2.2rem; }
-            .top-meta { flex-direction: column; align-items: flex-start; gap: 5px; }
-        }
-    </style>
+      /* Shape */
+      --rounded: 0.375rem;
+      --rounded-lg: 0.75rem;
+      --rounded-arch: 28px 28px 6px 6px;
+      --rounded-full: 9999px;
+
+      /* Effects */
+      --soft-shadow: 0 4px 18px rgb(38 27 21 / 0.04);
+      --soft-shadow-raised: 0 8px 28px rgb(38 27 21 / 0.08);
+      --warm-hairline: 1px solid var(--outline-variant);
+      --brass-gradient: linear-gradient(90deg, var(--outline-variant), var(--data-3), var(--outline-variant));
+
+      /* Motion */
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+      --dur-micro: 120ms;
+      --dur-short: 220ms;
+      --dur-long: 420ms;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body {
+      overflow-x: clip;
+      margin: 0;
+      padding: 0;
+      background-color: var(--background);
+      color: var(--on-surface);
+      font-family: var(--font-body);
+      font-size: var(--body-size);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    header { position: static !important; }
+
+    button, input, select, textarea {
+      font-family: inherit;
+      font-size: inherit;
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .page-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-xl);
+      padding: var(--space-lg);
+      max-width: 1240px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+    .page-grid * { min-width: 0; }
+
+    /* Masthead & Navigation */
+    .masthead {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      padding-block-start: var(--space-sm);
+    }
+    .kicker-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+    .kicker-meta {
+      color: var(--on-surface-variant);
+      letter-spacing: 0.1em;
+    }
+    .title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: var(--display-size);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      color: var(--on-surface);
+      margin: 0;
+    }
+    .title em {
+      font-style: italic;
+      color: var(--primary);
+    }
+    .lede {
+      max-width: 68ch;
+      color: var(--on-surface-variant);
+      margin: 0;
+      font-size: 1.03rem;
+      line-height: 1.62;
+    }
+
+    .quick-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      padding-block: var(--space-xs);
+    }
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .nav-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: 0 var(--space-md);
+      border-radius: var(--rounded-full);
+      border: 1px solid var(--outline-btn);
+      background-color: var(--surface-container-low);
+      color: var(--on-surface);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+    }
+    .nav-pill:hover {
+      background-color: var(--surface-container);
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+    .nav-pill-cart {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+    .nav-pill-cart:hover {
+      background-color: var(--primary-hover);
+      border-color: var(--primary-hover);
+    }
+
+    .ornament-rule {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-block: var(--space-xs);
+      color: var(--secondary);
+      font-family: var(--font-label);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+    }
+    .ornament-rule::before,
+    .ornament-rule::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--brass-gradient);
+    }
+
+    /* Arch KPI Row */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .arch-card {
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-arch);
+      padding: var(--space-lg) var(--space-md) var(--space-md);
+      text-align: center;
+      box-shadow: var(--soft-shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: var(--space-xs);
+      transition: transform var(--dur-short) var(--ease-out), box-shadow var(--dur-short) var(--ease-out);
+    }
+    .arch-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--soft-shadow-raised);
+    }
+    .arch-card.is-featured {
+      background: var(--primary-container);
+      border-color: var(--outline-featured);
+    }
+    .arch-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--on-surface-variant);
+    }
+    .arch-figure {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: clamp(1.95rem, 1.5rem + 1.2vw, 2.5rem);
+      line-height: 1.05;
+      color: var(--on-surface);
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    .arch-card.is-featured .arch-figure {
+      color: var(--on-primary-container);
+    }
+    .arch-caption {
+      font-size: 0.8125rem;
+      color: var(--tertiary);
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    /* Section Headings */
+    .section-block {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding-bottom: var(--space-sm);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+    .section-kicker {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--secondary);
+      margin-bottom: var(--space-xs);
+    }
+    .section-title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: var(--headline-size);
+      line-height: 1.12;
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .section-title em {
+      font-style: italic;
+      color: var(--primary);
+    }
+    .section-sub {
+      color: var(--on-surface-variant);
+      max-width: 62ch;
+      margin: var(--space-xs) 0 0;
+      font-size: 0.9375rem;
+    }
+
+    /* Badges & Buttons */
+    .badge-emerald {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: var(--tertiary-container);
+      color: var(--on-tertiary-container);
+      border: 1px solid var(--outline-emerald);
+      padding: 4px 10px;
+      border-radius: var(--rounded-full);
+      font-family: var(--font-label);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .badge-brass {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: var(--secondary-container);
+      color: var(--secondary);
+      border: 1px solid var(--outline-variant);
+      padding: 4px 10px;
+      border-radius: var(--rounded-full);
+      font-family: var(--font-label);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .badge-terracotta {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      background: var(--primary-container);
+      color: var(--on-primary-container);
+      border: 1px solid var(--outline-featured);
+      padding: 4px 10px;
+      border-radius: var(--rounded-full);
+      font-family: var(--font-label);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-xs);
+      min-height: 44px;
+      padding: 0 var(--space-md);
+      border-radius: var(--rounded-full);
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn:disabled { opacity: 0.55; cursor: not-allowed; }
+    .btn-primary {
+      background-color: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+    .btn-primary:hover:not(:disabled) {
+      background-color: var(--primary-hover);
+      border-color: var(--primary-hover);
+    }
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--on-surface);
+      border-color: var(--outline-btn);
+    }
+    .btn-secondary:hover:not(:disabled) {
+      background-color: var(--surface-container);
+      border-color: var(--primary);
+    }
+    .btn-emerald {
+      background-color: var(--tertiary);
+      color: var(--on-primary);
+      border-color: var(--tertiary);
+    }
+    .btn-emerald:hover:not(:disabled) {
+      background-color: var(--on-tertiary-container);
+      border-color: var(--on-tertiary-container);
+    }
+    .btn-sm {
+      min-height: 44px;
+      padding: 0 14px;
+      font-size: 0.8125rem;
+    }
+
+    /* Main Store + QR Workspace */
+    .workspace-split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+
+    /* Filter Bar */
+    .filter-panel {
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .filter-pill {
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: var(--rounded-full);
+      border: 1px solid var(--outline-btn);
+      background: var(--surface-card);
+      color: var(--on-surface);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+    }
+    .filter-pill:hover {
+      background: var(--surface-container);
+      border-color: var(--primary);
+    }
+    .filter-pill[aria-pressed="true"] {
+      background: var(--primary);
+      color: var(--on-primary);
+      border-color: var(--primary);
+    }
+    .controls-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--space-md);
+      align-items: end;
+    }
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .field-label {
+      font-family: var(--font-label);
+      font-size: var(--label-size);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--on-surface-variant);
+    }
+    .field-input, .field-select {
+      min-height: 44px;
+      padding: 8px 12px;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-card);
+      color: var(--on-surface);
+      font-size: 0.9375rem;
+      width: 100%;
+    }
+    .field-select { padding-right: 32px; }
+    .field-input:focus, .field-select:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 2px var(--primary-container);
+    }
+
+    /* Product Cards Grid */
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .product-card-wrap { container-type: inline-size; }
+    .product-card {
+      background: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      box-shadow: var(--soft-shadow);
+      height: 100%;
+      transition: border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-short) var(--ease-out), transform var(--dur-short) var(--ease-out);
+    }
+    .product-card:hover {
+      border-color: var(--outline-featured);
+      box-shadow: var(--soft-shadow-raised);
+      transform: translateY(-2px);
+    }
+    .product-card.is-selected {
+      border-color: var(--primary);
+      background: var(--primary-container);
+      box-shadow: 0 0 0 2px var(--primary);
+    }
+    .product-art {
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      height: 148px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: var(--space-sm);
+    }
+    .product-art svg {
+      width: 100%;
+      height: 100%;
+      max-height: 128px;
+    }
+    .product-meta-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+    }
+    .product-id {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--on-surface-variant);
+    }
+    .product-title {
+      font-family: var(--font-headline);
+      font-weight: 600;
+      font-size: 1.35rem;
+      line-height: 1.15;
+      margin: 0;
+      color: var(--on-surface);
+    }
+    .product-desc {
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      margin: 0;
+      line-height: 1.48;
+      flex: 1;
+    }
+    .product-price-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: var(--space-sm);
+      padding-top: var(--space-xs);
+      border-top: 1px solid var(--outline-variant);
+    }
+    .product-price {
+      font-family: var(--font-headline);
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--primary);
+      font-variant-numeric: tabular-nums;
+    }
+    .product-artisan-share {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--tertiary);
+    }
+    .product-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-top: var(--space-xs);
+    }
+    .product-actions .btn { flex: 1 1 115px; }
+
+    /* Passport QR Simulator Panel */
+    .passport-panel {
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-featured);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      box-shadow: var(--soft-shadow-raised);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      position: sticky;
+      top: var(--space-md);
+    }
+    .passport-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--space-md);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+    .qr-box {
+      background: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+    .qr-box svg {
+      width: 92px;
+      height: 92px;
+      display: block;
+    }
+    .qr-code-id {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      color: var(--on-surface);
+      letter-spacing: 0.04em;
+    }
+    .passport-title-block h3 {
+      font-family: var(--font-headline);
+      font-size: 1.55rem;
+      font-weight: 600;
+      line-height: 1.12;
+      margin: var(--space-xs) 0 4px;
+      color: var(--on-surface);
+    }
+    .passport-workshop {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--on-primary-container);
+      margin: 0;
+    }
+
+    .passport-story-box {
+      background: var(--surface-card);
+      border-left: 3px solid var(--tertiary);
+      border-radius: 0 var(--rounded) var(--rounded) 0;
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+    .passport-story-box p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--on-surface);
+      line-height: 1.55;
+    }
+    .trace-specs {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-xs) var(--space-md);
+      margin-top: var(--space-xs);
+      padding-top: var(--space-xs);
+      border-top: 1px dashed var(--outline-variant);
+      font-size: 0.8125rem;
+    }
+    .trace-spec-item span {
+      display: block;
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--on-surface-variant);
+      font-weight: 700;
+    }
+    .trace-spec-item strong {
+      color: var(--on-surface);
+      font-weight: 600;
+    }
+
+    /* Fair Price Calculator & Table inside QR Passport */
+    .fair-price-box {
+      background: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .scenario-toggle-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+    }
+    .toggle-chip {
+      min-height: 36px;
+      padding: 4px 12px;
+      border-radius: var(--rounded-full);
+      border: 1px solid var(--outline-btn);
+      background: var(--surface-container-low);
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .toggle-chip[aria-pressed="true"] {
+      background: var(--tertiary);
+      color: var(--on-primary);
+      border-color: var(--tertiary);
+    }
+
+    .price-slider-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 128px;
+      gap: var(--space-sm);
+      align-items: end;
+    }
+    .range-slider {
+      width: 100%;
+      accent-color: var(--primary);
+      cursor: pointer;
+      min-height: 44px;
+    }
+
+    .split-bar {
+      display: flex;
+      height: 14px;
+      border-radius: var(--rounded-full);
+      overflow: hidden;
+      background: var(--surface-container-high);
+      border: 1px solid var(--outline-variant);
+    }
+    .split-seg-artisan { background: var(--tertiary); transition: width var(--dur-short) var(--ease-out); }
+    .split-seg-margin { background: var(--primary); transition: width var(--dur-short) var(--ease-out); }
+    .split-seg-costs { background: var(--data-3); transition: width var(--dur-short) var(--ease-out); }
+
+    .fair-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .fair-table th {
+      text-align: left;
+      font-family: var(--font-label);
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--on-surface-variant);
+      padding: 6px 4px;
+      background: var(--surface-container);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+    .fair-table td {
+      padding: 7px 4px;
+      border-bottom: 1px solid var(--outline-variant);
+      vertical-align: middle;
+    }
+    .fair-table tr:last-child td { border-bottom: none; }
+    .fair-table .num { text-align: right; font-weight: 600; }
+    .fair-table .highlight-row td {
+      background: var(--tertiary-container);
+      color: var(--on-tertiary-container);
+      font-weight: 700;
+    }
+    .fair-table .comparison-note {
+      font-size: 0.78rem;
+      color: var(--on-surface-variant);
+      background: var(--surface-container-low);
+    }
+
+    .dot-swatch {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: var(--rounded-full);
+      margin-right: 6px;
+    }
+    .swatch-artisan { background: var(--tertiary); }
+    .swatch-margin { background: var(--primary); }
+    .swatch-costs { background: var(--data-3); }
+
+    /* Tonal Band for Digital Platforms & WhatsApp Order Simulator */
+    .tonal-band {
+      background: var(--surface-container);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+
+    .platforms-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+      gap: var(--space-md);
+    }
+    .platform-card {
+      background: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xs);
+      box-shadow: var(--soft-shadow);
+    }
+    .platform-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-sm);
+    }
+    .platform-icon-title {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .icon-badge {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--rounded);
+      background: var(--primary-container);
+      color: var(--primary);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid var(--outline-featured);
+    }
+    .platform-card h3 {
+      margin: 0;
+      font-family: var(--font-headline);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--on-surface);
+    }
+    .platform-handle {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--tertiary);
+      font-weight: 500;
+    }
+    .platform-card p {
+      margin: var(--space-xs) 0 0;
+      font-size: 0.875rem;
+      color: var(--on-surface-variant);
+      line-height: 1.5;
+      flex: 1;
+    }
+    .platform-metric {
+      margin-top: var(--space-xs);
+      padding-top: var(--space-xs);
+      border-top: 1px solid var(--outline-variant);
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--on-surface);
+    }
+
+    /* Order & WhatsApp Business Builder + 6-Step Process */
+    .ops-split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .order-box {
+      background: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .cart-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm);
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+    }
+    .cart-item-info strong {
+      display: block;
+      font-size: 0.9rem;
+      color: var(--on-surface);
+    }
+    .cart-item-info span {
+      font-size: 0.78rem;
+      color: var(--on-surface-variant);
+    }
+    .qty-controls {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .qty-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--rounded-full);
+      border: 1px solid var(--outline-btn);
+      background: var(--surface-card);
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .qty-btn:hover { border-color: var(--primary); background: var(--primary-container); }
+    .qty-val {
+      min-width: 24px;
+      text-align: center;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .wa-preview {
+      background: var(--tertiary-container);
+      border: 1px solid var(--outline-emerald);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .wa-bubble {
+      background: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      padding: var(--space-md);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      color: var(--on-surface);
+    }
+    .inline-feedback {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--tertiary);
+      min-height: 1.25em;
+    }
+
+    /* 6-Step Traceability Flow */
+    .process-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr));
+      gap: var(--space-sm);
+    }
+    .step-tile {
+      background: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      padding: var(--space-sm) var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .step-num {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .step-tile strong {
+      font-size: 0.875rem;
+      color: var(--on-surface);
+    }
+    .step-tile span {
+      font-size: 0.78rem;
+      color: var(--on-surface-variant);
+      line-height: 1.4;
+    }
+
+    /* Instagram Social Feed Preview */
+    .social-split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .ig-shell {
+      background: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      box-shadow: var(--soft-shadow);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+    .ig-profile-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-md);
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+    .ig-identity {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .ig-avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: var(--rounded-full);
+      background: var(--primary-container);
+      border: 2px solid var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .ig-handle {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--on-surface);
+    }
+    .ig-bio {
+      font-size: 0.82rem;
+      color: var(--on-surface-variant);
+      margin-top: 2px;
+      max-width: 44ch;
+    }
+    .ig-stats {
+      display: flex;
+      gap: var(--space-md);
+      font-size: 0.8125rem;
+      font-variant-numeric: tabular-nums;
+    }
+    .ig-stats div strong { display: block; font-size: 1rem; color: var(--on-surface); }
+    .ig-highlights {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .ig-highlight-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      border-radius: var(--rounded-full);
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--on-surface);
+    }
+    .ig-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+    .ig-post-tile {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--rounded);
+      border: 1px solid var(--outline-variant);
+      background: var(--surface-container-low);
+      padding: var(--space-sm);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      text-align: left;
+      transition: transform var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out), box-shadow var(--dur-micro) var(--ease-out);
+    }
+    .ig-post-tile:hover {
+      transform: translateY(-2px);
+      border-color: var(--primary);
+      box-shadow: var(--soft-shadow);
+    }
+    .ig-post-tile[aria-pressed="true"] {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 2px var(--primary);
+      background: var(--primary-container);
+    }
+    .ig-post-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--secondary);
+    }
+    .ig-post-art {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 0;
+      padding: 4px;
+    }
+    .ig-post-art svg {
+      width: 100%;
+      height: 100%;
+      max-height: 92px;
+    }
+    .ig-post-caption-short {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--on-surface);
+      line-height: 1.25;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .ig-inspector {
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .ig-inspector-art {
+      background: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      height: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-md);
+    }
+    .ig-inspector-art svg {
+      width: 100%;
+      height: 100%;
+      max-height: 140px;
+    }
+    .seo-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .seo-tag {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 2px 8px;
+      border-radius: var(--rounded);
+      background: var(--surface-container);
+      color: var(--on-surface-variant);
+      border: 1px solid var(--outline-variant);
+    }
+
+    /* Brand Manual Swatches + Competitor Table */
+    .brand-competitor-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+      gap: var(--space-lg);
+      align-items: start;
+    }
+    .brand-card {
+      background: var(--surface-container-low);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-md);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .swatch-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+    .swatch-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      background: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded);
+      padding: 8px;
+    }
+    .swatch-chip {
+      width: 28px;
+      height: 28px;
+      border-radius: var(--rounded);
+      flex-shrink: 0;
+      border: 1px solid var(--outline-variant);
+    }
+    .chip-teal { background: var(--brand-teal); }
+    .chip-coral { background: var(--brand-coral); }
+    .chip-sun { background: var(--brand-sun); }
+    .chip-sea { background: var(--brand-sea); }
+
+    .table-wrap {
+      overflow-x: auto;
+      background: var(--surface-card);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--rounded-lg);
+    }
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+    .comp-table th {
+      text-align: left;
+      padding: 10px 12px;
+      background: var(--surface-container);
+      font-family: var(--font-label);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--on-surface-variant);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+    .comp-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--outline-variant);
+      vertical-align: top;
+    }
+    .comp-table tr:last-child td { border-bottom: none; }
+    .comp-table tr.is-ours td {
+      background: var(--tertiary-container);
+      color: var(--on-tertiary-container);
+      font-weight: 600;
+    }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--outline-variant);
+      padding-top: var(--space-lg);
+      padding-bottom: var(--space-xl);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-md);
+      font-size: 0.85rem;
+      color: var(--on-surface-variant);
+    }
+
+    /* Empty State */
+    .empty-state {
+      background: var(--surface-container-low);
+      border: 1px dashed var(--outline);
+      border-radius: var(--rounded-lg);
+      padding: var(--space-lg);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    @container (max-width: 320px) {
+      .product-actions { flex-direction: column; }
+    }
+
+    @media (max-width: 960px) {
+      .workspace-split,
+      .ops-split,
+      .social-split,
+      .brand-competitor-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .passport-panel {
+        position: static;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page-grid {
+        padding: var(--space-md);
+        gap: var(--space-lg);
+      }
+      .controls-row,
+      .price-slider-row,
+      .swatch-list {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .ig-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .passport-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .qr-box {
+        align-self: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
 </head>
 <body>
-
-    <!-- 1. META SUPERIOR DE LA IMAGEN -->
-    <div class="top-meta">
-        <div class="left">PROTOTIPO WEB & TIENDA DIGITAL · EMPRENDIMIENTO E INNOVACIÓN</div>
-        <div class="right">BARRANQUILLA · GALAPA · USIACURÍ · TUBARÁ</div>
-    </div>
-
-    <!-- 2. TÍTULO Y DESCRIPCIÓN EXACTA DE LA CAPTURA -->
-    <h1 class="hero-title">Tejiendo <span class="italic-rust">Caribe</span>: artesanía del Atlántico con origen verificable</h1>
-    
-    <p class="hero-desc">
+  <div class="page-grid">
+    <!-- MASTHEAD -->
+    <header class="masthead">
+      <div class="kicker-row">
+        <span>Prototipo Web &amp; Tienda Digital · Emprendimiento e Innovación</span>
+        <span class="kicker-meta">Barranquilla · Galapa · Usiacurí · Tubará</span>
+      </div>
+      <h1 class="title">Tejiendo <em>Caribe</em>: artesanía del Atlántico con origen verificable</h1>
+      <p class="lede">
         Plataforma de comercio transparente que conecta directamente a talleres familiares de Usiacurí, Galapa y Tubará con compradores locales, turistas y empresas. Cada pieza incluye un <strong>Pasaporte Digital QR</strong> en marquilla de fique con la historia del taller y el desglose real de precio justo.
-    </p>
+      </p>
 
-    <!-- 3. BARRA DE BOTONES DE FILTRO & PEDIDO PILOTO -->
-    <div class="controls-row">
-        <div class="pills-group">
-            <a href="#catalogo" class="pill-btn active">Catálogo por municipios</a>
-            <a href="#pedir-mochila" class="pill-btn">Pasaporte Digital QR</a>
-            <a href="#footer-info" class="pill-btn">Plataformas y WhatsApp</a>
-            <a href="https://instagram.com" target="_blank" class="pill-btn">Feed @tejiendocaribe.co</a>
+      <nav class="quick-nav" aria-label="Navegación del prototipo">
+        <div class="nav-links">
+          <a class="nav-pill" href="#catalogo">Catálogo por municipios</a>
+          <a class="nav-pill" href="#pasaporte">Pasaporte Digital QR</a>
+          <a class="nav-pill" href="#plataformas">Plataformas y WhatsApp</a>
+          <a class="nav-pill" href="#redes">Feed @tejiendocaribe.co</a>
         </div>
-        <a href="#pedir-mochila" class="order-btn">
-            🛍️ Pedido piloto: 1
+        <a class="nav-pill nav-pill-cart" href="#pedido-piloto" id="nav-cart-badge">
+          <i data-lucide="shopping-bag" aria-hidden="true"></i>
+          <span>Pedido piloto: <strong id="cart-count-top">1</strong></span>
         </a>
-    </div>
+      </nav>
 
-    <!-- 4. DIVISOR DE TRAZABILIDAD -->
-    <div class="divider-diamonds">
-        ◆ TRAZABILIDAD QR · COMERCIO DIRECTO · MODELO VALIDADO 2026 ◆
-    </div>
+      <div class="ornament-rule" aria-hidden="true">◆ Trazabilidad QR · Comercio Directo · Modelo Validado 2026 ◆</div>
+    </header>
 
-    <!-- 5. REJILLA DE LAS 4 TARJETAS DE LA CAPTURA DE PANTALLA -->
-    <div class="stats-grid">
-        <div class="stat-card">
-            <div class="card-label">RETRIBUCIÓN DIRECTA AL TALLER</div>
-            <div class="card-num">85,0 %</div>
-            <div class="card-subtext">Frente a &lt;20 % en tiendas turísticas tradicionales</div>
+    <!-- KPI ARCH CARDS -->
+    <section aria-label="Indicadores clave del modelo validado" class="kpi-grid">
+      <article class="arch-card is-featured">
+        <div class="arch-label">Retribución directa al taller</div>
+        <div class="arch-figure">85,0 %</div>
+        <div class="arch-caption">Frente a &lt;20 % en tiendas turísticas tradicionales</div>
+      </article>
+      <article class="arch-card">
+        <div class="arch-label">Confianza con Pasaporte QR</div>
+        <div class="arch-figure">64 %</div>
+        <div class="arch-caption">7 de 11 encuestados · 82 % exige ver pago justo</div>
+      </article>
+      <article class="arch-card">
+        <div class="arch-label">Ticket promedio ajustado</div>
+        <div class="arch-figure">$115.000</div>
+        <div class="arch-caption">Sets/combos · Margen $10.225 · Equilibrio 132/mes</div>
+      </article>
+      <article class="arch-card">
+        <div class="arch-label">Meta piloto de 90 días</div>
+        <div class="arch-figure">100 pedidos</div>
+        <div class="arch-caption">Meses 1–3 (25 / 33 / 42) con 10–15 talleres</div>
+      </article>
+    </section>
+
+    <!-- SECCIÓN 1 & 2: CATÁLOGO POR MUNICIPIOS + SIMULADOR PASAPORTE DIGITAL QR -->
+    <section id="catalogo" class="section-block" aria-labelledby="heading-catalogo">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Tienda digital prototipo · Catálogo y trazabilidad</div>
+          <h2 id="heading-catalogo" class="section-title">Catálogo por <em>municipios</em> y Pasaporte Digital QR</h2>
+          <p class="section-sub">
+            Selecciona una pieza de Usiacurí, Galapa o Tubará para inspeccionar su código QR único, la ficha del taller creador y el desglose transparente peso a peso.
+          </p>
         </div>
+        <span class="badge-emerald">
+          <i data-lucide="qr-code" aria-hidden="true"></i>
+          <span>Marquilla ecológica en fique</span>
+        </span>
+      </div>
 
-        <div class="stat-card">
-            <div class="card-label">CONFIANZA CON PASAPORTE QR</div>
-            <div class="card-num">64 %</div>
-            <div class="card-subtext">7 de 11 encuestados · 82 % exige ver pago justo</div>
-        </div>
-
-        <div class="stat-card">
-            <div class="card-label">TICKET PROMEDIO AJUSTADO</div>
-            <div class="card-num">$115.000</div>
-            <div class="card-subtext">Sets/combos · Margen $10.225 · Equilibrio 132/mes</div>
-        </div>
-
-        <div class="stat-card">
-            <div class="card-label">META PILOTO DE 90 DÍAS</div>
-            <div class="card-num">100 pedidos</div>
-            <div class="card-subtext">Meses 1-3 (25 / 33 / 42) con 10–15 talleres</div>
-        </div>
-    </div>
-
-    <!-- 6. SECCIÓN DE CATALOGO Y PEDIDO DIRECTO POR WHATSAPP -->
-    <div id="catalogo" class="section-header">
-        <div class="section-tag">TIENDA DIGITAL PROTOTIPO · CATÁLOGO Y TRAZABILIDAD</div>
-        <h2 class="section-title">Catálogo por <span>municipios</span> y Pasaporte Digital QR</h2>
-    </div>
-
-    <div class="catalog-grid">
-        
-        <!-- PRODUCTO 1: USIACURÍ -->
-        <div class="product-card" id="pedir-mochila">
+      <div class="workspace-split">
+        <!-- LEFT: FILTERS + PRODUCT CATALOG -->
+        <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+          <div class="filter-panel" role="region" aria-label="Filtros del catálogo artesanal">
             <div>
-                <span class="badge-qr">PASAPORTE DIGITAL QR VERIFICADO ✓</span>
-                <h3 class="product-title">Mochila Calada en Palma de Iraca</h3>
-                <p style="color: #555; font-size: 0.9rem;"><strong>Taller:</strong> Rosalba Mercado · Usiacurí, Atlántico</p>
-                <p style="color: #666; font-size: 0.85rem; margin-top: 4px;"><strong>Técnica:</strong> Tejido en iraca (18 horas de trabajo a mano)</p>
-                
-                <div class="price-tag">$115.000 COP</div>
-
-                <p style="font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 700; color: var(--teal);">Desglose Transparente de Precio Justo:</p>
-                <table class="breakdown-table">
-                    <thead>
-                        <tr>
-                            <th>Concepto</th>
-                            <th>%</th>
-                            <th>Valor (COP)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="font-weight: 700; background-color: #E8F5E9;">
-                            <td>Pago Directo a Artesana</td>
-                            <td>65%</td>
-                            <td>$74.750</td>
-                        </tr>
-                        <tr>
-                            <td>Materia Prima (Iraca)</td>
-                            <td>15%</td>
-                            <td>$17.250</td>
-                        </tr>
-                        <tr>
-                            <td>Empaque Ecológico</td>
-                            <td>8%</td>
-                            <td>$9.200</td>
-                        </tr>
-                        <tr>
-                            <td>Comisión Plataforma</td>
-                            <td>12%</td>
-                            <td>$13.800</td>
-                        </tr>
-                    </tbody>
-                </table>
+              <span class="field-label" style="display: block; margin-bottom: var(--space-xs);">Filtrar por municipio del Atlántico</span>
+              <div class="pill-group" id="muni-pills">
+                <button type="button" class="filter-pill" data-muni="Todos" aria-pressed="true" onclick="setMunicipality('Todos')">Todos (8)</button>
+                <button type="button" class="filter-pill" data-muni="Usiacurí" aria-pressed="false" onclick="setMunicipality('Usiacurí')">Usiacurí · Iraca (4)</button>
+                <button type="button" class="filter-pill" data-muni="Galapa" aria-pressed="false" onclick="setMunicipality('Galapa')">Galapa · Ceiba Roja (2)</button>
+                <button type="button" class="filter-pill" data-muni="Tubará" aria-pressed="false" onclick="setMunicipality('Tubará')">Tubará · Accesorios (2)</button>
+              </div>
             </div>
 
-            <a href="[suspicious link removed]" target="_blank" class="whatsapp-btn">
-                💬 Pedir por WhatsApp ($115.000 COP)
-            </a>
+            <div class="controls-row">
+              <div class="field-group">
+                <label class="field-label" for="line-filter">Formato de venta</label>
+                <select id="line-filter" class="field-select" onchange="setLineFilter(this.value)">
+                  <option value="Todos">Todas las líneas</option>
+                  <option value="Individual">Pieza individual</option>
+                  <option value="Combo">Set / Combo ($115.000+)</option>
+                  <option value="Corporativo">Encargo corporativo B2B</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="catalog-search">Buscar pieza o técnica</label>
+                <input id="catalog-search" class="field-input" type="search" placeholder="Ej. iraca, mochila, máscara, set" oninput="setSearchQuery(this.value)">
+              </div>
+            </div>
+          </div>
+
+          <div id="catalog-grid" class="catalog-grid" aria-live="polite"></div>
         </div>
 
-        <!-- PRODUCTO 2: GALAPA -->
-        <div class="product-card">
-            <div>
-                <span class="badge-qr">PASAPORTE DIGITAL QR VERIFICADO ✓</span>
-                <h3 class="product-title">Máscara Ceiba Roja (Carnaval)</h3>
-                <p style="color: #555; font-size: 0.9rem;"><strong>Taller:</strong> Talla Tradicional · Galapa, Atlántico</p>
-                <p style="color: #666; font-size: 0.85rem; margin-top: 4px;"><strong>Técnica:</strong> Tallado en ceiba roja y pintura a mano</p>
-                
-                <div class="price-tag">$95.000 COP</div>
+        <!-- RIGHT: LIVE PASSPORT QR SIMULATOR -->
+        <aside id="pasaporte" class="passport-panel" aria-label="Simulador interactivo de Pasaporte Digital QR">
+          <div class="passport-header">
+            <div class="passport-title-block">
+              <span class="badge-terracotta" id="qr-muni-badge">Usiacurí · Atlántico</span>
+              <h3 id="qr-product-name">Mochila Tejida en Palma de Iraca</h3>
+              <p class="passport-workshop" id="qr-workshop-name">Taller Familiar Tejedores de Iraca (Ficha prototipo)</p>
+            </div>
+            <div class="qr-box" aria-label="Código QR único simulado de la pieza">
+              <div id="qr-svg-container"></div>
+              <span class="qr-code-id" id="qr-serial-id">TC-USI-2026-001</span>
+            </div>
+          </div>
 
-                <p style="font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 700; color: var(--teal);">Desglose Transparente de Precio Justo:</p>
-                <table class="breakdown-table">
-                    <thead>
-                        <tr>
-                            <th>Concepto</th>
-                            <th>%</th>
-                            <th>Valor (COP)</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr style="font-weight: 700; background-color: #E8F5E9;">
-                            <td>Pago Directo al Artesano</td>
-                            <td>65%</td>
-                            <td>$61.750</td>
-                        </tr>
-                        <tr>
-                            <td>Materia Prima (Ceiba)</td>
-                            <td>15%</td>
-                            <td>$14.250</td>
-                        </tr>
-                        <tr>
-                            <td>Empaque Ecológico</td>
-                            <td>8%</td>
-                            <td>$7.600</td>
-                        </tr>
-                        <tr>
-                            <td>Comisión Plataforma</td>
-                            <td>12%</td>
-                            <td>$11.400</td>
-                        </tr>
-                    </tbody>
-                </table>
+          <div class="passport-story-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: var(--space-xs); flex-wrap: wrap;">
+              <span class="field-label">Historia del maestro artesano y origen</span>
+              <span class="badge-emerald">Origen certificado</span>
+            </div>
+            <p id="qr-artisan-story"></p>
+            <div class="trace-specs">
+              <div class="trace-spec-item">
+                <span>Técnica</span>
+                <strong id="qr-technique"></strong>
+              </div>
+              <div class="trace-spec-item">
+                <span>Materia prima</span>
+                <strong id="qr-material"></strong>
+              </div>
+              <div class="trace-spec-item">
+                <span>Tiempo de oficio</span>
+                <strong id="qr-time"></strong>
+              </div>
+              <div class="trace-spec-item">
+                <span>Soporte al creador</span>
+                <strong>WhatsApp Business directo</strong>
+              </div>
+            </div>
+          </div>
+
+          <div class="fair-price-box">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--space-xs);">
+              <span class="field-label">Tabla transparente de precio justo</span>
+              <div class="scenario-toggle-row" role="group" aria-label="Escenario financiero del desglose">
+                <button type="button" class="toggle-chip" id="btn-mode-ajustado" aria-pressed="true" onclick="setPricingMode('ajustado')">Ajustado (15%)</button>
+                <button type="button" class="toggle-chip" id="btn-mode-base" aria-pressed="false" onclick="setPricingMode('base')">Base (12,5%)</button>
+              </div>
             </div>
 
-            <a href="[suspicious link removed]" target="_blank" class="whatsapp-btn">
-                💬 Pedir por WhatsApp ($95.000 COP)
-            </a>
+            <div class="price-slider-row">
+              <div class="field-group">
+                <label class="field-label" for="price-slider">Simular precio de venta (COP)</label>
+                <input type="range" id="price-slider" class="range-slider" min="35000" max="200000" step="5000" value="115000" oninput="syncPriceFromSlider(this.value)">
+              </div>
+              <div class="field-group">
+                <label class="field-label" for="price-number">Valor exacto</label>
+                <input type="number" id="price-number" class="field-input" min="35000" max="200000" step="1000" value="115000" oninput="syncPriceFromInput(this.value)">
+              </div>
+            </div>
+
+            <div class="split-bar" aria-label="Distribución proporcional del precio">
+              <div class="split-seg-artisan" id="bar-artisan" style="width: 85%;"></div>
+              <div class="split-seg-margin" id="bar-margin" style="width: 8.9%;"></div>
+              <div class="split-seg-costs" id="bar-costs" style="width: 6.1%;"></div>
+            </div>
+
+            <table class="fair-table">
+              <thead>
+                <tr>
+                  <th>Concepto del desglose</th>
+                  <th style="text-align: right;">Valor (COP)</th>
+                  <th style="text-align: right;">%</th>
+                </tr>
+              </thead>
+              <tbody id="fair-table-body"></tbody>
+            </table>
+
+            <div style="display: flex; gap: var(--space-xs); flex-wrap: wrap; padding-top: var(--space-xs);">
+              <button type="button" class="btn btn-primary btn-sm" onclick="addSelectedToCart()" style="flex: 1;">
+                <i data-lucide="plus" aria-hidden="true"></i>
+                <span>Añadir esta pieza al pedido</span>
+              </button>
+              <button type="button" class="btn btn-secondary btn-sm" onclick="resetPriceToSelected()">
+                <span>Restaurar precio pieza</span>
+              </button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: PLATAFORMAS DIGITALES Y FLUJO DE PEDIDOS WHATSAPP BUSINESS -->
+    <section id="plataformas" class="tonal-band" aria-labelledby="heading-plataformas">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Ecosistema digital · Comunicación, venta y operación</div>
+          <h2 id="heading-plataformas" class="section-title">Plataformas digitales y cierre por <em>WhatsApp Business</em></h2>
+          <p class="section-sub">
+            Infraestructura liviana (<em>Asset-Light</em>) diseñada para que el artesano venda sin barreras técnicas y el comprador cierre con total trazabilidad.
+          </p>
+        </div>
+        <span class="badge-brass">5 plataformas integradas · $150k/mes web + $350k/mes pauta</span>
+      </div>
+
+      <div class="platforms-grid">
+        <article class="platform-card">
+          <div class="platform-head">
+            <div class="platform-icon-title">
+              <span class="icon-badge"><i data-lucide="instagram" aria-hidden="true"></i></span>
+              <div>
+                <h3>Instagram</h3>
+                <div class="platform-handle">@tejiendocaribe.co</div>
+              </div>
+            </div>
+            <span class="badge-terracotta">Canal #1</span>
+          </div>
+          <p>Canal prioritario de descubrimiento (4 de 11 encuestados). Historias de talleres en Galapa, Usiacurí y Tubará, reels de tejido manual y pauta segmentada en Barranquilla y turismo.</p>
+          <div class="platform-metric">Presupuesto ajustado: $350.000 COP / mes en pauta focalizada</div>
+        </article>
+
+        <article class="platform-card">
+          <div class="platform-head">
+            <div class="platform-icon-title">
+              <span class="icon-badge"><i data-lucide="message-circle" aria-hidden="true"></i></span>
+              <div>
+                <h3>WhatsApp Business</h3>
+                <div class="platform-handle">Catálogo y cierre directo</div>
+              </div>
+            </div>
+            <span class="badge-emerald">Activo</span>
+          </div>
+          <p>Atención directa a compradores, cotizaciones B2B con hoteles y coordinación sin fricción con los artesanos (sin obligarlos a descargar aplicaciones complejas).</p>
+          <div class="platform-metric">Notificación de despacho + enlace de verificación QR</div>
+        </article>
+
+        <article class="platform-card">
+          <div class="platform-head">
+            <div class="platform-icon-title">
+              <span class="icon-badge"><i data-lucide="store" aria-hidden="true"></i></span>
+              <div>
+                <h3>Marketplace Web &amp; QR</h3>
+                <div class="platform-handle">Tienda Digital Prototipo</div>
+              </div>
+            </div>
+            <span class="badge-emerald">Prototipo</span>
+          </div>
+          <p>Catálogo organizado por municipios del Atlántico con fichas de Pasaporte Digital QR, sets/combos de $115.000 COP y validación de autenticidad en línea.</p>
+          <div class="platform-metric">Inversión diseño: $1.500.000 · Hosting/QR: $150.000/mes</div>
+        </article>
+
+        <article class="platform-card">
+          <div class="platform-head">
+            <div class="platform-icon-title">
+              <span class="icon-badge"><i data-lucide="credit-card" aria-hidden="true"></i></span>
+              <div>
+                <h3>Pasarela de Pagos</h3>
+                <div class="platform-handle">Wompi / Bold / MercadoPago</div>
+              </div>
+            </div>
+            <span class="badge-brass">3,5 %</span>
+          </div>
+          <p>Cobro digital seguro por tarjeta, PSE o link de pago. El envío se liquida aparte contra entrega o tarifa fija asumida por el comprador final.</p>
+          <div class="platform-metric">Comisión plataforma: 15,0% en escenario ajustado</div>
+        </article>
+
+        <article class="platform-card">
+          <div class="platform-head">
+            <div class="platform-icon-title">
+              <span class="icon-badge"><i data-lucide="layers" aria-hidden="true"></i></span>
+              <div>
+                <h3>Gestión &amp; Contenido</h3>
+                <div class="platform-handle">Miro · Trello · Slack · IA</div>
+              </div>
+            </div>
+            <span class="badge-brass">Operación</span>
+          </div>
+          <p>Tableros de control del piloto (10–15 talleres), curaduría fotográfica ($800.000 inicial) y guiones de storytelling para publicaciones y sustentación.</p>
+          <div class="platform-metric">Software operativo: $100.000/mes · Soporte talleres: $150.000/mes</div>
+        </article>
+      </div>
+
+      <!-- 6-step process -->
+      <div>
+        <div class="field-label" style="margin-bottom: var(--space-sm);">Esquema del proceso de pedidos, trazabilidad, pagos y entregas</div>
+        <div class="process-strip">
+          <div class="step-tile">
+            <span class="step-num">01 · MATERIA PRIMA</span>
+            <strong>Palma y madera local</strong>
+            <span>Selección sostenible de iraca en Usiacurí y ceiba roja en Galapa.</span>
+          </div>
+          <div class="step-tile">
+            <span class="step-num">02 · TALLER</span>
+            <strong>Elaboración manual</strong>
+            <span>Tejido o talla artesanal en el taller familiar sin intermediarios opacos.</span>
+          </div>
+          <div class="step-tile">
+            <span class="step-num">03 · CURADURÍA</span>
+            <strong>Control de calidad</strong>
+            <span>Revisión física y registro fotográfico por el coordinador en territorio.</span>
+          </div>
+          <div class="step-tile">
+            <span class="step-num">04 · PASAPORTE QR</span>
+            <strong>Marquilla de fique</strong>
+            <span>Asignación de código único ligado a la historia y tabla de precio justo.</span>
+          </div>
+          <div class="step-tile">
+            <span class="step-num">05 · EMPAQUE</strong>
+            <strong>Empaque sostenible</strong>
+            <span>Embalaje ecológico ($3.000/pedido; premium cobrado aparte en piezas pequeñas).</span>
+          </div>
+          <div class="step-tile">
+            <span class="step-num">06 · DESPACHO</span>
+            <strong>Entrega + WhatsApp</strong>
+            <span>Envío asumido por el comprador y confirmación directa por WhatsApp Business.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive WhatsApp Business Order Simulator -->
+      <div id="pedido-piloto" class="ops-split">
+        <div class="order-box">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: var(--space-sm); flex-wrap: wrap;">
+            <div>
+              <div class="field-label">Simulador de pedido piloto</div>
+              <h3 style="margin: 2px 0 0; font-family: var(--font-headline); font-size: 1.45rem;">Arma tu pedido y calcula el pago al artesano</h3>
+            </div>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="loadComboPreset()">Cargar combo $115k</button>
+          </div>
+
+          <div id="cart-items-container" class="cart-list"></div>
+
+          <div class="field-group">
+            <label class="field-label" for="shipping-select">Modalidad de entrega (asumida por el comprador)</label>
+            <select id="shipping-select" class="field-select" onchange="setShippingMethod(this.value)">
+              <option value="Contra entrega Barranquilla / Área Metropolitana">Contra entrega Barranquilla / Área Metropolitana (paga cliente al recibir)</option>
+              <option value="Tarifa fija envío nacional ($16.000 COP aparte)">Tarifa fija envío nacional ($16.000 COP asumidos por comprador)</option>
+              <option value="Entrega presencial feria / evento Unisimón">Entrega presencial en feria o evento Unisimón ($0 envío)</option>
+            </select>
+          </div>
+
+          <table class="fair-table">
+            <tbody id="cart-summary-body"></tbody>
+          </table>
         </div>
 
-    </div>
+        <div class="wa-preview">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: var(--space-sm); flex-wrap: wrap;">
+            <span class="badge-emerald">
+              <i data-lucide="message-square" aria-hidden="true"></i>
+              <span>Vista previa mensaje WhatsApp Business</span>
+            </span>
+            <span class="product-id">Flujo sin descarga de app</span>
+          </div>
+          <div class="wa-bubble" id="wa-message-preview"></div>
+          <div style="display: flex; flex-wrap: wrap; gap: var(--space-sm);">
+            <button type="button" class="btn btn-emerald" onclick="copyWhatsAppMessage()">
+              <i data-lucide="copy" aria-hidden="true"></i>
+              <span>Copiar mensaje WhatsApp</span>
+            </button>
+            <button type="button" class="btn btn-secondary" onclick="downloadOrderSummary()">
+              <i data-lucide="download" aria-hidden="true"></i>
+              <span>Exportar ficha (.txt)</span>
+            </button>
+          </div>
+          <div id="wa-feedback" class="inline-feedback" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 4: VISTA PREVIA FEED DE REDES SOCIALES -->
+    <section id="redes" class="section-block" aria-labelledby="heading-redes">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Plan de marketing ajustado · Experimento Semana 3</div>
+          <h2 id="heading-redes" class="section-title">Vista previa del feed <em>@tejiendocaribe.co</em></h2>
+          <p class="section-sub">
+            Simulación del feed de Instagram con el experimento planteado: contrastar 3 publicaciones con historia del artesano, municipio y precio justo frente a 1 publicación control solo con foto y precio.
+          </p>
+        </div>
+        <div class="pill-group" role="group" aria-label="Filtro del feed de Instagram">
+          <button type="button" class="filter-pill" data-feed="Todos" aria-pressed="true" onclick="setFeedFilter('Todos')">Todos (6)</button>
+          <button type="button" class="filter-pill" data-feed="Historia" aria-pressed="false" onclick="setFeedFilter('Historia')">Con historia (3)</button>
+          <button type="button" class="filter-pill" data-feed="Control" aria-pressed="false" onclick="setFeedFilter('Control')">Control foto+precio (1)</button>
+          <button type="button" class="filter-pill" data-feed="Educativo" aria-pressed="false" onclick="setFeedFilter('Educativo')">Precio justo y QR (2)</button>
+        </div>
+      </div>
+
+      <div class="social-split">
+        <!-- IG Profile & 3x2 Grid -->
+        <div class="ig-shell">
+          <div class="ig-profile-bar">
+            <div class="ig-identity">
+              <div class="ig-avatar" aria-hidden="true">
+                <svg viewBox="0 0 48 48" width="38" height="38">
+                  <circle cx="24" cy="24" r="20" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-dasharray="4 3"/>
+                  <path d="M12 24 C18 14, 30 14, 36 24 C30 34, 18 34, 12 24 Z" fill="none" stroke="var(--tertiary)" stroke-width="2.5"/>
+                  <circle cx="24" cy="24" r="4.5" fill="var(--primary)"/>
+                </svg>
+              </div>
+              <div>
+                <div class="ig-handle">@tejiendocaribe.co</div>
+                <div class="ig-bio">Artesanía auténtica del Atlántico · Usiacurí · Galapa · Tubará · Trazabilidad Pasaporte QR + 85% pago justo directo al taller.</div>
+              </div>
+            </div>
+            <div class="ig-stats">
+              <div><strong>6</strong><span>Piezas piloto</span></div>
+              <div><strong>10–15</strong><span>Talleres</span></div>
+              <div><strong>85 %</strong><span>Pago justo</span></div>
+            </div>
+          </div>
+
+          <div class="ig-highlights" aria-label="Historias destacadas de Instagram">
+            <span class="ig-highlight-chip">Pasaporte QR</span>
+            <span class="ig-highlight-chip">Usiacurí · Iraca</span>
+            <span class="ig-highlight-chip">Galapa · Ceiba</span>
+            <span class="ig-highlight-chip">Tubará · Macramé</span>
+            <span class="ig-highlight-chip">Precio Justo</span>
+          </div>
+
+          <div id="ig-grid" class="ig-grid" aria-live="polite"></div>
+        </div>
+
+        <!-- Post Detail Inspector -->
+        <aside class="ig-inspector" aria-label="Detalle de la publicación seleccionada">
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: var(--space-xs); flex-wrap: wrap;">
+            <span class="badge-terracotta" id="ig-detail-type">Prueba A/B · Con historia</span>
+            <span class="product-id" id="ig-detail-format">Carrusel · Semana 3</span>
+          </div>
+
+          <div class="ig-inspector-art" id="ig-detail-art"></div>
+
+          <h3 id="ig-detail-title" style="font-family: var(--font-headline); font-size: 1.45rem; margin: 0;"></h3>
+          <p id="ig-detail-caption" style="margin: 0; font-size: 0.9rem; line-height: 1.55; color: var(--on-surface);"></p>
+
+          <div style="background: var(--surface-card); border: 1px solid var(--outline-variant); border-radius: var(--rounded); padding: var(--space-sm) var(--space-md);">
+            <span class="field-label" style="display: block; margin-bottom: 4px;">Objetivo e hipótesis de la publicación</span>
+            <p id="ig-detail-hypothesis" style="margin: 0; font-size: 0.84rem; color: var(--on-surface-variant);"></p>
+          </div>
+
+          <div>
+            <span class="field-label" style="display: block; margin-bottom: 6px;">Palabras clave SEO y posicionamiento orgánico</span>
+            <div class="seo-tags" id="ig-detail-seo"></div>
+          </div>
+
+          <button type="button" class="btn btn-primary" id="ig-jump-qr-btn" onclick="openPostProductInQR()">
+            <i data-lucide="qr-code" aria-hidden="true"></i>
+            <span>Inspeccionar pieza en el Pasaporte QR</span>
+          </button>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 5: IDENTIDAD VISUAL Y EVIDENCIA FRENTE A COMPETENCIA -->
+    <section class="section-block" aria-labelledby="heading-identidad">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Manual de identidad y ventaja competitiva validada</div>
+          <h2 id="heading-identidad" class="section-title">Identidad <em>Tejiendo Caribe</em> y brecha frente a competidores</h2>
+        </div>
+      </div>
+
+      <div class="brand-competitor-grid">
+        <div class="brand-card">
+          <div class="field-label">Paleta del manual de identidad digital</div>
+          <p style="margin: 0; font-size: 0.875rem; color: var(--on-surface-variant);">
+            Fusión del tejido tradicional caribeño con nodos de conectividad digital (Cambria en títulos de documento/presentación, Calibri en cuerpo; armonizada en este prototipo con estética Terracotta).
+          </p>
+          <div class="swatch-list">
+            <div class="swatch-item">
+              <span class="swatch-chip chip-teal" aria-hidden="true"></span>
+              <div><strong style="font-size: 0.82rem; display: block;">Verde Teal</strong><span class="product-id">#0F5C63</span></div>
+            </div>
+            <div class="swatch-item">
+              <span class="swatch-chip chip-coral" aria-hidden="true"></span>
+              <div><strong style="font-size: 0.82rem; display: block;">Coral Atardecer</strong><span class="product-id">#E4572E</span></div>
+            </div>
+            <div class="swatch-item">
+              <span class="swatch-chip chip-sun" aria-hidden="true"></span>
+              <div><strong style="font-size: 0.82rem; display: block;">Amarillo Sol</strong><span class="product-id">#F2B134</span></div>
+            </div>
+            <div class="swatch-item">
+              <span class="swatch-chip chip-sea" aria-hidden="true"></span>
+              <div><strong style="font-size: 0.82rem; display: block;">Turquesa Mar</strong><span class="product-id">#2A9D8F</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="comp-table" aria-label="Comparativa frente a 5 competidores observados el 17 de octubre de 2026">
+            <thead>
+              <tr>
+                <th>Plataforma / Competidor</th>
+                <th>Pieza y precio observado</th>
+                <th>¿Nombra al artesano?</th>
+                <th>¿Muestra pago justo?</th>
+                <th>¿Pasaporte QR?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="is-ours">
+                <td>Tejiendo Caribe (Prototipo)</td>
+                <td>Sets/combos $115.000 · Individuales $80.000+</td>
+                <td>Sí (taller y municipio)</td>
+                <td>Sí (85% directo)</td>
+                <td>Sí (QR en fique)</td>
+              </tr>
+              <tr>
+                <td>Mercado Libre</td>
+                <td>Mochilas $99k–$130k · Pulseras $33.970 docena</td>
+                <td>No</td>
+                <td>No</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>Artesanías del Atlántico (WA/IG)</td>
+                <td>Individual de iraca $80.000</td>
+                <td>No ("Talleres del Atlántico")</td>
+                <td>No</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>Artesanías de Colombia (SIART)</td>
+                <td>Catálogo nacional institucional</td>
+                <td>Por verificar / Genérico</td>
+                <td>No se desglosa</td>
+                <td>No observado</td>
+              </tr>
+              <tr>
+                <td>Tienda Aeropuerto Cortissoz</td>
+                <td>Souvenirs y artesanías locales</td>
+                <td>No en etiqueta física</td>
+                <td>No desglosado</td>
+                <td>No</td>
+              </tr>
+              <tr>
+                <td>Mercado Artesanal Directo</td>
+                <td>Venta en ferias de Galapa y Usiacurí</td>
+                <td>Sí (venta presencial)</td>
+                <td>No en formato digital</td>
+                <td>No</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
 
     <!-- FOOTER -->
-    <footer id="footer-info">
-        <p><strong>Tejiendo Caribe © 2026</strong> · Universidad Simón Bolívar · Barranquilla, Colombia</p>
-        <p style="margin-top: 5px; color: #777;">Proyecto de Emprendimiento Social · Yefrey Navarro & Roberto De la Hoz</p>
+    <footer class="site-footer">
+      <div>
+        <strong>Tejiendo Caribe S.A.S. (en constitución)</strong> · Yefrey Navarro Fontalvo y Roberto De la Hoz · Docente: Natalia Muñoz Rozo (Universidad Simón Bolívar, 2026).<br>
+        <span>Fuentes del proyecto: Documento Parcial Final Tejiendo Caribe, Modelo Financiero a 36 meses y Análisis de Marketing (observado oct–nov 2026).</span>
+      </div>
+      <button type="button" class="btn btn-secondary btn-sm" id="reset-proto-btn" onclick="handleResetPrototype(this)">
+        <i data-lucide="rotate-ccw" aria-hidden="true"></i>
+        <span>Reiniciar prototipo</span>
+      </button>
     </footer>
+  </div>
 
+  <api-shim></api-shim>
+  <script>
+    const PRODUCTS = [
+      {
+        id: `TC-USI-2026-001`,
+        name: `Mochila Tejida en Palma de Iraca`,
+        municipality: `Usiacurí`,
+        line: `Combo`,
+        price: 115000,
+        technique: `Tejido manual en palma de iraca`,
+        material: `Fibra natural de palma de iraca curada`,
+        time: `3 semanas de elaboración manual`,
+        workshop: `Taller Familiar Tejedores de Iraca · Usiacurí (Ficha prototipo)`,
+        story: `Tejida hebra por hebra en Usiacurí con palma de iraca secada al sol y tintes naturales. El Pasaporte QR permite conocer quién la tejió y comprobar que el 85% del valor regresa directamente al taller creador.`,
+        artType: `mochila`,
+        badge: `Ticket objetivo $115k`
+      },
+      {
+        id: `TC-USI-2026-002`,
+        name: `Individual de Palma de Iraca`,
+        municipality: `Usiacurí`,
+        line: `Individual`,
+        price: 80000,
+        technique: `Tejido circular calado en iraca`,
+        material: `Palma de iraca seleccionada de Usiacurí`,
+        time: `5 días de tejido artesanal`,
+        workshop: `Taller Roseta de Usiacurí · Usiacurí (Ficha prototipo)`,
+        story: `Referencia validada en mercado a $80.000 COP. A diferencia de los catálogos que solo indican "Talleres del Atlántico", aquí cada pieza identifica al taller creador y desglosa su remuneración real.`,
+        artType: `individual`,
+        badge: `Referencia observada`
+      },
+      {
+        id: `TC-USI-2026-003`,
+        name: `Set Mesa Caribe (2 Individuales + Porta-vasos)`,
+        municipality: `Usiacurí`,
+        line: `Combo`,
+        price: 115000,
+        technique: `Tejido de mesa en palma de iraca`,
+        material: `Palma de iraca y marquilla ecológica en fique`,
+        time: `7 días de tejido en conjunto`,
+        workshop: `Taller Colectivo Palma Viva · Usiacurí (Ficha prototipo)`,
+        story: `Combo diseñado en el Plan Financiero Ajustado para elevar el ticket promedio a $115.000 COP, optimizando el costo de empaque sostenible por pedido y garantizando viabilidad desde el Mes 16.`,
+        artType: `combo`,
+        badge: `Set recomendado`
+      },
+      {
+        id: `TC-USI-2026-004`,
+        name: `Mochila con Tapa Edición Origen`,
+        municipality: `Usiacurí`,
+        line: `Individual`,
+        price: 130000,
+        technique: `Tejido doble trama con tapa estructural`,
+        material: `Palma de iraca y fibra de fique natural`,
+        time: `3 a 4 semanas de oficio`,
+        workshop: `Taller Maestras del Tejido · Usiacurí (Ficha prototipo)`,
+        story: `Inspirada en el rango alto observado ($99.000–$130.000 COP), incorpora ficha de autenticidad digital y certificado único contra imitaciones sintéticas industriales.`,
+        artType: `mochila`,
+        badge: `Edición origen`
+      },
+      {
+        id: `TC-GAL-2026-005`,
+        name: `Máscara Tallada en Ceiba Roja`,
+        municipality: `Galapa`,
+        line: `Combo`,
+        price: 115000,
+        technique: `Talla manual y policromía tradicional`,
+        material: `Madera sostenible de ceiba roja de Galapa`,
+        time: `10 días de talla, lijado y pintura`,
+        workshop: `Taller Talla y Carnaval · Galapa (Ficha prototipo)`,
+        story: `Tallada a gubia en madera de ceiba roja en Galapa, cuna de las máscaras tradicionales del Carnaval. Cada máscara lleva etiqueta QR con video del proceso de talla y desglose justo.`,
+        artType: `mascara`,
+        badge: `Patrimonio Galapa`
+      },
+      {
+        id: `TC-GAL-2026-006`,
+        name: `Set Tradición Galapa (Máscara + Miniatura B2B)`,
+        municipality: `Galapa`,
+        line: `Corporativo`,
+        price: 130000,
+        technique: `Talla artesanal en ceiba roja`,
+        material: `Ceiba roja y empaque premium en fique`,
+        time: `12 días por set completo`,
+        workshop: `Taller Maestros de la Ceiba · Galapa (Ficha prototipo)`,
+        story: `Línea pensada para hoteles boutique de Barranquilla y regalos corporativos B2B (ingresos proyectados desde el Mes 7), con historia bilingüe en el Pasaporte Digital QR.`,
+        artType: `mascara`,
+        badge: `Línea B2B hoteles`
+      },
+      {
+        id: `TC-TUB-2026-007`,
+        name: `Pulseras Macramé y Accesorios de Tubará`,
+        municipality: `Tubará`,
+        line: `Individual`,
+        price: 35000,
+        technique: `Macramé trenzado a mano`,
+        material: `Hilo artesanal y semillas naturales del Caribe`,
+        time: `2 días por paquete curado`,
+        workshop: `Taller Manos de Tubará · Tubará (Ficha prototipo)`,
+        story: `Alternativa auténtica frente a las pulseras genéricas de $2.831 la unidad en marketplaces masivos. En piezas pequeñas el empaque premium especial se ofrece como adicional para cuidar el margen.`,
+        artType: `pulsera`,
+        badge: `Accesorio local`
+      },
+      {
+        id: `TC-TUB-2026-008`,
+        name: `Combo Atlántico (Accesorios Tubará + Individual Iraca)`,
+        municipality: `Tubará`,
+        line: `Corporativo`,
+        price: 115000,
+        technique: `Curaduría mixta macramé e iraca`,
+        material: `Fibra de iraca, hilo macramé y fique`,
+        time: `6 días de producción articulada`,
+        workshop: `Red de Talleres Tubará & Usiacurí (Ficha prototipo)`,
+        story: `Une dos municipios del Atlántico en un regalo corporativo de $115.000 COP. Un solo empaque sostenible reduce el costo logístico unitario a $3.000 COP y maximiza el retorno al artesano.`,
+        artType: `combo`,
+        badge: `Combo inter-municipal`
+      }
+    ];
+
+    const SOCIAL_POSTS = [
+      {
+        id: `IG-01`,
+        category: `Historia`,
+        badge: `Prueba A/B · Historia 1/3`,
+        format: `Reel 45s + Carrusel`,
+        title: `¿Quién tejió esta mochila en Usiacurí?`,
+        shortCaption: `3 semanas de palma de iraca · Conoce el taller y el 85% directo`,
+        caption: `Cuando ves una mochila en una tienda turística, rara vez sabes quién la tejió. Esta pieza tomó 3 semanas de trabajo manual en palma de iraca en Usiacurí. Escanea su marquilla de fique y abre el Pasaporte Digital QR: historia real, técnica y 85% ($97.750 COP) directo al taller creador.`,
+        hypothesis: `Experimento Semana 3: medir guardados, comentarios y clics hacia WhatsApp en publicaciones centradas en la persona y municipio frente al post control solo con foto y precio.`,
+        seo: [`#ArtesaníasDelAtlántico`, `mochilas de iraca precio justo`, `Usiacurí origen verificable`],
+        productId: `TC-USI-2026-001`,
+        artType: `mochila`
+      },
+      {
+        id: `IG-02`,
+        category: `Historia`,
+        badge: `Prueba A/B · Historia 2/3`,
+        format: `Carrusel 5 láminas`,
+        title: `Madera de ceiba roja tallada en Galapa`,
+        shortCaption: `Del tronco de ceiba al Pasaporte QR · Regalo corporativo con historia`,
+        caption: `En Galapa cada máscara de ceiba roja conserva la memoria del Carnaval. Al escanear su código QR verificas la talla artesanal en madera sostenible y el porcentaje exacto que recibe el maestro taller. Ideal para regalos corporativos y hoteles del Caribe.`,
+        hypothesis: `Validar interés B2B y turístico (hoteles en Barranquilla) cuando se expone el proceso de talla y la trazabilidad del taller.`,
+        seo: [`regalos corporativos artesanales caribe`, `máscaras de Galapa`, `artesanías del atlántico barranquilla`],
+        productId: `TC-GAL-2026-005`,
+        artType: `mascara`
+      },
+      {
+        id: `IG-03`,
+        category: `Historia`,
+        badge: `Prueba A/B · Historia 3/3`,
+        format: `Historia de taller`,
+        title: `Tubará y Usiacurí en un Combo Atlántico`,
+        shortCaption: `Dos municipios del Atlántico unidos en un set de $115.000 COP`,
+        caption: `Unimos accesorios en macramé de Tubará con tejido en palma de iraca de Usiacurí en un Combo Atlántico de $115.000 COP. Sin intermediarios opacos y con cierre directo por WhatsApp Business.`,
+        hypothesis: `Comprobar si el formato combo/set con historia dual incrementa el ticket promedio hacia $115.000 COP.`,
+        seo: [`artesanías Tubará`, `combos artesanales Caribe`, `comercio justo Atlántico`],
+        productId: `TC-TUB-2026-008`,
+        artType: `combo`
+      },
+      {
+        id: `IG-04`,
+        category: `Control`,
+        badge: `Prueba A/B · Control 1/1`,
+        format: `Post único foto + precio`,
+        title: `Individual de Palma de Iraca · $80.000 COP`,
+        shortCaption: `Individual tejido en palma de iraca. Precio: $80.000 COP.`,
+        caption: `Individual tejido en palma de iraca del Atlántico. Precio: $80.000 COP. Pedidos por mensaje directo o WhatsApp.`,
+        hypothesis: `Grupo de control del experimento: publicación tradicional sin nombre de taller ni tabla de precio justo para comparar interacción frente a las 3 piezas con historia.`,
+        seo: [`individual de iraca`, `artesanías Barranquilla`],
+        productId: `TC-USI-2026-002`,
+        artType: `individual`
+      },
+      {
+        id: `IG-05`,
+        category: `Educativo`,
+        badge: `Educativo · Precio Justo`,
+        format: `Infografía carrusel`,
+        title: `¿A dónde va tu dinero cuando compras artesanía?`,
+        shortCaption: `Menos del 20% en tienda turística vs. 85% directo en Tejiendo Caribe`,
+        caption: `El 82% de los compradores encuestados quiere saber cuánto recibe realmente el artesano. En una tienda turística tradicional el creador suele recibir menos del 20%. En Tejiendo Caribe desglosamos cada peso en el Pasaporte Digital QR: 85% directo al taller.`,
+        hypothesis: `Educar al comprador joven con conciencia social detectado en la escucha social sobre la opacidad en almacenes turísticos.`,
+        seo: [`precio justo artesanía`, `trazabilidad QR`, `impacto social Caribe`],
+        productId: `TC-USI-2026-003`,
+        artType: `combo`
+      },
+      {
+        id: `IG-06`,
+        category: `Educativo`,
+        badge: `Educativo · Pasaporte QR`,
+        format: `Demostración móvil`,
+        title: `Así funciona la marquilla ecológica con QR`,
+        shortCaption: `Escanea el fique, conoce al artesano y verifica la autenticidad`,
+        caption: `El 64% de los compradores confía más en una pieza con historia verificable por QR. Nuestra marquilla de fique conecta el mundo físico del taller con el catálogo digital y WhatsApp Business en un solo escaneo.`,
+        hypothesis: `Reducir la duda sobre autenticidad frente a imitaciones sintéticas y explicar el uso del QR antes de ferias como Sabor Bajero o Feria Unisimón.`,
+        seo: [`pasaporte digital QR`, `artesanía auténtica Colombia`, `Tejiendo Caribe`],
+        productId: `TC-GAL-2026-006`,
+        artType: `mascara`
+      }
+    ];
+
+    let state = {
+      municipality: `Todos`,
+      lineFilter: `Todos`,
+      searchQuery: ``,
+      selectedProductId: `TC-USI-2026-001`,
+      pricingMode: `ajustado`,
+      customPrice: 115000,
+      cart: [{ id: `TC-USI-2026-001`, qty: 1 }],
+      shippingMethod: `Contra entrega Barranquilla / Área Metropolitana`,
+      feedFilter: `Todos`,
+      selectedPostId: `IG-01`
+    };
+
+    function formatCOP(val) {
+      const n = Math.round(Number(val) || 0);
+      return `$` + n.toLocaleString(`es-CO`);
+    }
+
+    function escapeHTML(str) {
+      return String(str)
+        .replace(/&/g, `&amp;`)
+        .replace(/</g, `&lt;`)
+        .replace(/>/g, `&gt;`)
+        .replace(/"/g, `&quot;`);
+    }
+
+    function getProductById(id) {
+      return PRODUCTS.find((p) => p.id === id) || PRODUCTS[0];
+    }
+
+    function getCraftSVG(artType) {
+      if (artType === `mochila`) {
+        return `<svg viewBox="0 0 180 120" aria-hidden="true">
+          <path d="M56 36 C56 12, 124 12, 124 36" fill="none" stroke="var(--secondary)" stroke-width="5" stroke-linecap="round"/>
+          <path d="M46 40 L134 40 L142 96 C142 108, 124 112, 90 112 C56 112, 38 108, 38 96 Z" fill="var(--surface-container-high)" stroke="var(--on-surface)" stroke-width="2.2"/>
+          <path d="M42 58 L138 58 L140 76 L40 76 Z" fill="var(--primary)"/>
+          <path d="M44 67 L60 59 L76 67 L90 59 L104 67 L120 59 L136 67" fill="none" stroke="var(--surface-card)" stroke-width="2.2"/>
+          <path d="M41 85 L139 85" stroke="var(--tertiary)" stroke-width="4" stroke-dasharray="6 4"/>
+          <rect x="116" y="34" width="16" height="20" rx="2" fill="var(--surface-card)" stroke="var(--tertiary)" stroke-width="1.6"/>
+          <rect x="120" y="39" width="8" height="8" fill="var(--tertiary)"/>
+        </svg>`;
+      }
+      if (artType === `individual`) {
+        return `<svg viewBox="0 0 180 120" aria-hidden="true">
+          <circle cx="90" cy="60" r="46" fill="var(--surface-container-high)" stroke="var(--secondary)" stroke-width="2.5"/>
+          <circle cx="90" cy="60" r="36" fill="none" stroke="var(--primary)" stroke-width="2" stroke-dasharray="5 3"/>
+          <circle cx="90" cy="60" r="24" fill="var(--primary-container)" stroke="var(--tertiary)" stroke-width="2.5"/>
+          <circle cx="90" cy="60" r="10" fill="var(--primary)"/>
+          <path d="M90 14 L90 106 M44 60 L136 60 M57 27 L123 93 M123 27 L57 93" stroke="var(--outline)" stroke-width="1" opacity="0.7"/>
+        </svg>`;
+      }
+      if (artType === `mascara`) {
+        return `<svg viewBox="0 0 180 120" aria-hidden="true">
+          <path d="M54 34 L42 14 L68 26 L90 12 L112 26 L138 14 L126 34" fill="var(--secondary)" stroke="var(--on-surface)" stroke-width="2"/>
+          <path d="M54 34 C54 26, 126 26, 126 34 L122 84 C118 102, 104 110, 90 110 C76 110, 62 102, 58 84 Z" fill="var(--primary)" stroke="var(--on-surface)" stroke-width="2.2"/>
+          <path d="M62 54 Q74 44 84 54 Q74 62 62 54 Z" fill="var(--surface-card)"/>
+          <path d="M96 54 Q106 44 118 54 Q106 62 96 54 Z" fill="var(--surface-card)"/>
+          <circle cx="73" cy="54" r="3.5" fill="var(--on-surface)"/>
+          <circle cx="107" cy="54" r="3.5" fill="var(--on-surface)"/>
+          <path d="M90 56 L84 74 L96 74 Z" fill="var(--secondary-container)" stroke="var(--on-surface)" stroke-width="1.6"/>
+          <path d="M72 86 Q90 96 108 86" fill="none" stroke="var(--tertiary-container)" stroke-width="4" stroke-linecap="round"/>
+        </svg>`;
+      }
+      if (artType === `pulsera`) {
+        return `<svg viewBox="0 0 180 120" aria-hidden="true">
+          <ellipse cx="74" cy="62" rx="34" ry="26" fill="none" stroke="var(--primary)" stroke-width="8"/>
+          <ellipse cx="74" cy="62" rx="34" ry="26" fill="none" stroke="var(--surface-card)" stroke-width="2" stroke-dasharray="4 6"/>
+          <ellipse cx="106" cy="58" rx="34" ry="26" fill="none" stroke="var(--tertiary)" stroke-width="8"/>
+          <ellipse cx="106" cy="58" rx="34" ry="26" fill="none" stroke="var(--secondary-container)" stroke-width="2" stroke-dasharray="4 6"/>
+          <circle cx="90" cy="36" r="5.5" fill="var(--secondary)"/>
+          <circle cx="90" cy="84" r="5.5" fill="var(--secondary)"/>
+        </svg>`;
+      }
+      return `<svg viewBox="0 0 180 120" aria-hidden="true">
+        <rect x="34" y="26" width="112" height="72" rx="8" fill="var(--surface-container-high)" stroke="var(--on-surface)" stroke-width="2"/>
+        <circle cx="72" cy="62" r="24" fill="var(--primary-container)" stroke="var(--primary)" stroke-width="2.5"/>
+        <circle cx="72" cy="62" r="12" fill="none" stroke="var(--tertiary)" stroke-width="2.5" stroke-dasharray="4 3"/>
+        <rect x="106" y="40" width="28" height="36" rx="4" fill="var(--surface-card)" stroke="var(--secondary)" stroke-width="2"/>
+        <rect x="112" y="46" width="16" height="16" fill="var(--tertiary)"/>
+        <path d="M112 68 L128 68" stroke="var(--on-surface)" stroke-width="2"/>
+      </svg>`;
+    }
+
+    function generateDeterministicQRSVG(seedStr) {
+      let hash = 2166136261;
+      for (let i = 0; i < seedStr.length; i++) {
+        hash ^= seedStr.charCodeAt(i);
+        hash = Math.imul(hash, 16777619);
+      }
+      const size = 11;
+      let rects = ``;
+      function inFinder(r, c) {
+        return (r < 4 && c < 4) || (r < 4 && c >= size - 4) || (r >= size - 4 && c < 4);
+      }
+      for (let r = 0; r < size; r++) {
+        for (let c = 0; c < size; c++) {
+          if (inFinder(r, c)) continue;
+          hash ^= (r * 31 + c * 17);
+          hash = Math.imul(hash, 16777619);
+          if ((hash >>> 0) % 2 === 0) {
+            rects += `<rect x="${c * 8 + 4}" y="${r * 8 + 4}" width="7" height="7" rx="1" fill="var(--on-surface)"/>`;
+          }
+        }
+      }
+      const finderPattern = (ox, oy) => `
+        <rect x="${ox}" y="${oy}" width="26" height="26" rx="3" fill="none" stroke="var(--on-surface)" stroke-width="3.5"/>
+        <rect x="${ox + 7}" y="${oy + 7}" width="12" height="12" rx="1.5" fill="var(--primary)"/>
+      `;
+      return `<svg viewBox="0 0 96 96" role="img" aria-label="Código QR de trazabilidad ${escapeHTML(seedStr)}">
+        <rect x="0" y="0" width="96" height="96" fill="var(--surface-card)"/>
+        ${finderPattern(4, 4)}
+        ${finderPattern(66, 4)}
+        ${finderPattern(4, 66)}
+        ${rects}
+      </svg>`;
+    }
+
+    function persistState() {
+      if (window.notebookAppApi && typeof window.notebookAppApi.setAppState === `function`) {
+        window.notebookAppApi.setAppState(state).catch(() => {});
+      }
+    }
+
+    function renderCatalog() {
+      const grid = document.getElementById(`catalog-grid`);
+      if (!grid) return;
+
+      const q = state.searchQuery.trim().toLowerCase();
+      const filtered = PRODUCTS.filter((p) => {
+        const matchMuni = state.municipality === `Todos` || p.municipality === state.municipality;
+        const matchLine = state.lineFilter === `Todos` || p.line === state.lineFilter;
+        const matchText = !q ||
+          p.name.toLowerCase().includes(q) ||
+          p.municipality.toLowerCase().includes(q) ||
+          p.technique.toLowerCase().includes(q) ||
+          p.story.toLowerCase().includes(q);
+        return matchMuni && matchLine && matchText;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">
+          <strong>No hay piezas que coincidan con ese filtro</strong>
+          <span style="font-size: 0.875rem; color: var(--on-surface-variant);">Prueba limpiar la búsqueda o cambiar el municipio seleccionado.</span>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="clearCatalogFilters()">Ver todo el catálogo</button>
+        </div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map((p) => {
+        const isSelected = p.id === state.selectedProductId;
+        const artisanPay = Math.round(p.price * (state.pricingMode === `ajustado` ? 0.85 : 0.875));
+        return `<div class="product-card-wrap">
+          <article class="product-card ${isSelected ? `is-selected` : ``}">
+            <div class="product-art">${getCraftSVG(p.artType)}</div>
+            <div class="product-meta-top">
+              <span class="badge-emerald">${escapeHTML(p.municipality)}</span>
+              <span class="product-id">${escapeHTML(p.id)}</span>
+            </div>
+            <h3 class="product-title">${escapeHTML(p.name)}</h3>
+            <p class="product-desc">${escapeHTML(p.technique)} · ${escapeHTML(p.time)}.</p>
+            <div class="product-price-row">
+              <span class="product-price">${formatCOP(p.price)}</span>
+              <span class="product-artisan-share">${formatCOP(artisanPay)} al taller</span>
+            </div>
+            <div class="product-actions">
+              <button type="button" class="btn ${isSelected ? `btn-emerald` : `btn-secondary`} btn-sm" onclick="selectProduct('${p.id}')">
+                ${isSelected ? `QR activo` : `Ver Pasaporte QR`}
+              </button>
+              <button type="button" class="btn btn-primary btn-sm" onclick="addToCart('${p.id}')">
+                Añadir
+              </button>
+            </div>
+          </article>
+        </div>`;
+      }).join(``);
+    }
+
+    function renderPassport() {
+      const p = getProductById(state.selectedProductId);
+      const muniBadge = document.getElementById(`qr-muni-badge`);
+      const nameEl = document.getElementById(`qr-product-name`);
+      const workshopEl = document.getElementById(`qr-workshop-name`);
+      const serialEl = document.getElementById(`qr-serial-id`);
+      const qrBox = document.getElementById(`qr-svg-container`);
+      const storyEl = document.getElementById(`qr-artisan-story`);
+      const techEl = document.getElementById(`qr-technique`);
+      const matEl = document.getElementById(`qr-material`);
+      const timeEl = document.getElementById(`qr-time`);
+
+      if (muniBadge) muniBadge.textContent = `${p.municipality} · Atlántico`;
+      if (nameEl) nameEl.textContent = p.name;
+      if (workshopEl) workshopEl.textContent = p.workshop;
+      if (serialEl) serialEl.textContent = p.id;
+      if (qrBox) qrBox.innerHTML = generateDeterministicQRSVG(p.id);
+      if (storyEl) storyEl.textContent = p.story;
+      if (techEl) techEl.textContent = p.technique;
+      if (matEl) matEl.textContent = p.material;
+      if (timeEl) timeEl.textContent = p.time;
+
+      renderFairPriceTable();
+    }
+
+    function renderFairPriceTable() {
+      const price = Math.max(35000, Math.min(200000, Number(state.customPrice) || 115000));
+      const isAjustado = state.pricingMode === `ajustado`;
+      const commRate = isAjustado ? 0.15 : 0.125;
+      const gatewayRate = 0.035;
+      const packCost = isAjustado ? 3000 : 6000;
+
+      const commission = Math.round(price * commRate);
+      const artisanNet = price - commission;
+      const gatewayFee = Math.round(price * gatewayRate);
+      const platformMargin = commission - gatewayFee - packCost;
+      const directCosts = gatewayFee + packCost;
+
+      const artisanPct = (artisanNet / price) * 100;
+      const marginPct = Math.max(0, (platformMargin / price) * 100);
+      const costsPct = Math.max(0, (directCosts / price) * 100);
+
+      const barArt = document.getElementById(`bar-artisan`);
+      const barMar = document.getElementById(`bar-margin`);
+      const barCos = document.getElementById(`bar-costs`);
+      if (barArt) barArt.style.width = `${artisanPct.toFixed(1)}%`;
+      if (barMar) barMar.style.width = `${marginPct.toFixed(1)}%`;
+      if (barCos) barCos.style.width = `${costsPct.toFixed(1)}%`;
+
+      const tradArtisanMax = Math.round(price * 0.20);
+      const tbody = document.getElementById(`fair-table-body`);
+      if (!tbody) return;
+
+      const marginClass = platformMargin < 0 ? `style="color: var(--error); font-weight: 700;"` : ``;
+
+      tbody.innerHTML = `
+        <tr class="highlight-row">
+          <td><span class="dot-swatch swatch-artisan"></span>Pago directo al taller artesano</td>
+          <td class="num">${formatCOP(artisanNet)}</td>
+          <td class="num">${artisanPct.toFixed(1)} %</td>
+        </tr>
+        <tr>
+          <td><span class="dot-swatch swatch-costs"></span>Pasarela de pago (3,5 % Wompi/Bold)</td>
+          <td class="num">${formatCOP(gatewayFee)}</td>
+          <td class="num">3,5 %</td>
+        </tr>
+        <tr>
+          <td><span class="dot-swatch swatch-costs"></span>Empaque sostenible y marquilla QR</td>
+          <td class="num">${formatCOP(packCost)}</td>
+          <td class="num">${((packCost / price) * 100).toFixed(1)} %</td>
+        </tr>
+        <tr>
+          <td><span class="dot-swatch swatch-margin"></span>Margen neto Tejiendo Caribe</td>
+          <td class="num" ${marginClass}>${formatCOP(platformMargin)}</td>
+          <td class="num" ${marginClass}>${((platformMargin / price) * 100).toFixed(1)} %</td>
+        </tr>
+        <tr>
+          <td><strong>Precio total pieza (envío aparte comprador)</strong></td>
+          <td class="num"><strong>${formatCOP(price)}</strong></td>
+          <td class="num"><strong>100,0 %</strong></td>
+        </tr>
+        <tr class="comparison-note">
+          <td colspan="3">
+            <strong>Contraste de mercado:</strong> en tienda turística tradicional (&lt;20 %), el artesano recibiría menos de <strong>${formatCOP(tradArtisanMax)}</strong> por esta misma pieza.
+          </td>
+        </tr>
+      `;
+    }
+
+    function renderCart() {
+      const container = document.getElementById(`cart-items-container`);
+      const summaryBody = document.getElementById(`cart-summary-body`);
+      const topCount = document.getElementById(`cart-count-top`);
+      const waPreview = document.getElementById(`wa-message-preview`);
+
+      const totalQty = state.cart.reduce((acc, item) => acc + item.qty, 0);
+      if (topCount) topCount.textContent = String(totalQty);
+
+      if (!container || !summaryBody || !waPreview) return;
+
+      if (state.cart.length === 0) {
+        container.innerHTML = `<div class="empty-state">
+          <strong>Tu pedido piloto está vacío</strong>
+          <span style="font-size: 0.84rem; color: var(--on-surface-variant);">Añade piezas del catálogo o carga el combo recomendado de $115.000 COP.</span>
+          <button type="button" class="btn btn-primary btn-sm" onclick="loadComboPreset()">Cargar Combo $115.000</button>
+        </div>`;
+        summaryBody.innerHTML = ``;
+        waPreview.textContent = `Selecciona al menos una pieza en el catálogo para generar el mensaje de pedido para WhatsApp Business.`;
+        return;
+      }
+
+      let subtotal = 0;
+      container.innerHTML = state.cart.map((item) => {
+        const p = getProductById(item.id);
+        const lineTotal = p.price * item.qty;
+        subtotal += lineTotal;
+        return `<div class="cart-item">
+          <div class="cart-item-info">
+            <strong>${escapeHTML(p.name)}</strong>
+            <span>${escapeHTML(p.municipality)} · ${escapeHTML(p.id)} · ${formatCOP(p.price)} c/u</span>
+          </div>
+          <div class="qty-controls">
+            <button type="button" class="qty-btn" aria-label="Disminuir cantidad de ${escapeHTML(p.name)}" onclick="updateCartQty('${p.id}', -1)">−</button>
+            <span class="qty-val">${item.qty}</span>
+            <button type="button" class="qty-btn" aria-label="Aumentar cantidad de ${escapeHTML(p.name)}" onclick="updateCartQty('${p.id}', 1)">+</button>
+          </div>
+        </div>`;
+      }).join(``);
+
+      const commRate = state.pricingMode === `ajustado` ? 0.15 : 0.125;
+      const artisanTotal = Math.round(subtotal * (1 - commRate));
+      const platformFee = subtotal - artisanTotal;
+      const shipExtra = state.shippingMethod.includes(`16.000`) ? 16000 : 0;
+      const grandTotal = subtotal + shipExtra;
+
+      summaryBody.innerHTML = `
+        <tr>
+          <td>Subtotal artesanías (${totalQty} ${totalQty === 1 ? `pieza` : `piezas`})</td>
+          <td class="num">${formatCOP(subtotal)}</td>
+        </tr>
+        <tr class="highlight-row">
+          <td>Pago directo garantizado a talleres (${((1 - commRate) * 100).toFixed(1)} %)</td>
+          <td class="num">${formatCOP(artisanTotal)}</td>
+        </tr>
+        <tr>
+          <td>Comisión transparente Tejiendo Caribe (${(commRate * 100).toFixed(1)} %)</td>
+          <td class="num">${formatCOP(platformFee)}</td>
+        </tr>
+        <tr>
+          <td>Envío (asumido por comprador)</td>
+          <td class="num">${shipExtra > 0 ? formatCOP(shipExtra) : `Según modalidad`}</td>
+        </tr>
+        <tr>
+          <td><strong>Total estimado pedido</strong></td>
+          <td class="num"><strong>${formatCOP(grandTotal)}</strong></td>
+        </tr>
+      `;
+
+      const lines = state.cart.map((item) => {
+        const p = getProductById(item.id);
+        return `• ${item.qty}x ${p.name} (${p.municipality} | QR: ${p.id}) — ${formatCOP(p.price * item.qty)}`;
+      }).join(`\n`);
+
+      waPreview.textContent = `Hola Tejiendo Caribe, quiero confirmar este pedido piloto:\n\n${lines}\n\nModalidad de entrega: ${state.shippingMethod}\nTotal artesanías: ${formatCOP(subtotal)}\nPago directo al taller (${((1 - commRate) * 100).toFixed(1)}%): ${formatCOP(artisanTotal)}\nSolicito link de pago (Wompi/Bold) y enlace de verificación Pasaporte QR.`;
+    }
+
+    function renderSocialFeed() {
+      const grid = document.getElementById(`ig-grid`);
+      if (!grid) return;
+
+      const posts = SOCIAL_POSTS.filter((post) => state.feedFilter === `Todos` || post.category === state.feedFilter);
+      if (!posts.some((p) => p.id === state.selectedPostId) && posts.length > 0) {
+        state.selectedPostId = posts[0].id;
+      }
+
+      grid.innerHTML = posts.map((post) => {
+        const active = post.id === state.selectedPostId;
+        return `<button type="button" class="ig-post-tile" aria-pressed="${active ? `true` : `false`}" onclick="selectSocialPost('${post.id}')">
+          <div class="ig-post-top">
+            <span>${escapeHTML(post.category)}</span>
+            <span>${escapeHTML(post.id)}</span>
+          </div>
+          <div class="ig-post-art">${getCraftSVG(post.artType)}</div>
+          <div class="ig-post-caption-short">${escapeHTML(post.shortCaption)}</div>
+        </button>`;
+      }).join(``);
+
+      renderSocialInspector();
+    }
+
+    function renderSocialInspector() {
+      const post = SOCIAL_POSTS.find((p) => p.id === state.selectedPostId) || SOCIAL_POSTS[0];
+      const badge = document.getElementById(`ig-detail-type`);
+      const fmt = document.getElementById(`ig-detail-format`);
+      const art = document.getElementById(`ig-detail-art`);
+      const title = document.getElementById(`ig-detail-title`);
+      const caption = document.getElementById(`ig-detail-caption`);
+      const hyp = document.getElementById(`ig-detail-hypothesis`);
+      const seo = document.getElementById(`ig-detail-seo`);
+
+      if (badge) badge.textContent = post.badge;
+      if (fmt) fmt.textContent = post.format;
+      if (art) art.innerHTML = getCraftSVG(post.artType);
+      if (title) title.textContent = post.title;
+      if (caption) caption.textContent = post.caption;
+      if (hyp) hyp.textContent = post.hypothesis;
+      if (seo) {
+        seo.innerHTML = post.seo.map((tag) => `<span class="seo-tag">${escapeHTML(tag)}</span>`).join(``);
+      }
+    }
+
+    function updateActivePills() {
+      document.querySelectorAll(`#muni-pills .filter-pill`).forEach((btn) => {
+        btn.setAttribute(`aria-pressed`, btn.dataset.muni === state.municipality ? `true` : `false`);
+      });
+      document.querySelectorAll(`[data-feed]`).forEach((btn) => {
+        btn.setAttribute(`aria-pressed`, btn.dataset.feed === state.feedFilter ? `true` : `false`);
+      });
+      const btnAj = document.getElementById(`btn-mode-ajustado`);
+      const btnBa = document.getElementById(`btn-mode-base`);
+      if (btnAj) btnAj.setAttribute(`aria-pressed`, state.pricingMode === `ajustado` ? `true` : `false`);
+      if (btnBa) btnBa.setAttribute(`aria-pressed`, state.pricingMode === `base` ? `true` : `false`);
+
+      const lineSelect = document.getElementById(`line-filter`);
+      if (lineSelect) lineSelect.value = state.lineFilter;
+      const searchInput = document.getElementById(`catalog-search`);
+      if (searchInput) searchInput.value = state.searchQuery;
+      const shipSelect = document.getElementById(`shipping-select`);
+      if (shipSelect) shipSelect.value = state.shippingMethod;
+
+      const slider = document.getElementById(`price-slider`);
+      const num = document.getElementById(`price-number`);
+      if (slider) slider.value = String(state.customPrice);
+      if (num) num.value = String(state.customPrice);
+    }
+
+    /* Hoisted Event Handlers */
+    function setMunicipality(muni) {
+      state.municipality = muni;
+      updateActivePills();
+      renderCatalog();
+      persistState();
+    }
+
+    function setLineFilter(val) {
+      state.lineFilter = val;
+      renderCatalog();
+      persistState();
+    }
+
+    function setSearchQuery(val) {
+      state.searchQuery = val;
+      renderCatalog();
+      persistState();
+    }
+
+    function clearCatalogFilters() {
+      state.municipality = `Todos`;
+      state.lineFilter = `Todos`;
+      state.searchQuery = ``;
+      updateActivePills();
+      renderCatalog();
+      persistState();
+    }
+
+    function selectProduct(id) {
+      const p = getProductById(id);
+      state.selectedProductId = p.id;
+      state.customPrice = p.price;
+      updateActivePills();
+      renderCatalog();
+      renderPassport();
+      persistState();
+    }
+
+    function setPricingMode(mode) {
+      state.pricingMode = mode;
+      updateActivePills();
+      renderCatalog();
+      renderFairPriceTable();
+      renderCart();
+      persistState();
+    }
+
+    function syncPriceFromSlider(val) {
+      const n = Number(val) || 115000;
+      state.customPrice = n;
+      const num = document.getElementById(`price-number`);
+      if (num) num.value = String(n);
+      renderFairPriceTable();
+      persistState();
+    }
+
+    function syncPriceFromInput(val) {
+      let n = Number(val);
+      if (Number.isNaN(n)) return;
+      if (n < 35000) n = 35000;
+      if (n > 200000) n = 200000;
+      state.customPrice = n;
+      const slider = document.getElementById(`price-slider`);
+      if (slider) slider.value = String(n);
+      renderFairPriceTable();
+      persistState();
+    }
+
+    function resetPriceToSelected() {
+      const p = getProductById(state.selectedProductId);
+      state.customPrice = p.price;
+      updateActivePills();
+      renderFairPriceTable();
+      persistState();
+    }
+
+    function addToCart(id) {
+      const existing = state.cart.find((item) => item.id === id);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        state.cart.push({ id: id, qty: 1 });
+      }
+      renderCart();
+      persistState();
+      const fb = document.getElementById(`wa-feedback`);
+      if (fb) fb.textContent = `Pieza añadida al pedido piloto y actualizada en WhatsApp Business.`;
+    }
+
+    function addSelectedToCart() {
+      addToCart(state.selectedProductId);
+    }
+
+    function updateCartQty(id, delta) {
+      const idx = state.cart.findIndex((item) => item.id === id);
+      if (idx === -1) return;
+      state.cart[idx].qty += delta;
+      if (state.cart[idx].qty <= 0) {
+        state.cart.splice(idx, 1);
+      }
+      renderCart();
+      persistState();
+    }
+
+    function loadComboPreset() {
+      state.cart = [{ id: `TC-USI-2026-003`, qty: 1 }];
+      renderCart();
+      persistState();
+      const fb = document.getElementById(`wa-feedback`);
+      if (fb) fb.textContent = `Cargado Set Mesa Caribe ($115.000 COP, ticket objetivo del modelo ajustado).`;
+    }
+
+    function setShippingMethod(val) {
+      state.shippingMethod = val;
+      renderCart();
+      persistState();
+    }
+
+    function copyWhatsAppMessage() {
+      const preview = document.getElementById(`wa-message-preview`);
+      const fb = document.getElementById(`wa-feedback`);
+      if (!preview) return;
+      const text = preview.textContent || ``;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          if (fb) fb.textContent = `Mensaje copiado al portapapeles. Listo para enviar por WhatsApp Business.`;
+        }).catch(() => {
+          if (fb) fb.textContent = `Selecciona el texto del recuadro verde para copiarlo manualmente.`;
+        });
+      } else if (fb) {
+        fb.textContent = `Selecciona el texto del recuadro verde para copiarlo manualmente.`;
+      }
+    }
+
+    function downloadOrderSummary() {
+      const preview = document.getElementById(`wa-message-preview`);
+      const fb = document.getElementById(`wa-feedback`);
+      if (!preview) return;
+      const content = `TEJIENDO CARIBE — RESUMEN DE PEDIDO PILOTO\n=========================================\n\n` + preview.textContent;
+      if (window.notebookAppApi && typeof window.notebookAppApi.triggerFileDownload === `function`) {
+        window.notebookAppApi.triggerFileDownload({
+          content: content,
+          contentType: `text/plain`,
+          encoding: `UTF-8`,
+          filename: `Tejiendo_Caribe_Pedido_Piloto.txt`
+        });
+        if (fb) fb.textContent = `Resumen descargado como Tejiendo_Caribe_Pedido_Piloto.txt.`;
+      } else if (fb) {
+        fb.textContent = `Descarga disponible dentro del visor de Gemini Notebook.`;
+      }
+    }
+
+    function setFeedFilter(filter) {
+      state.feedFilter = filter;
+      updateActivePills();
+      renderSocialFeed();
+      persistState();
+    }
+
+    function selectSocialPost(postId) {
+      state.selectedPostId = postId;
+      renderSocialFeed();
+      persistState();
+    }
+
+    function openPostProductInQR() {
+      const post = SOCIAL_POSTS.find((p) => p.id === state.selectedPostId) || SOCIAL_POSTS[0];
+      selectProduct(post.productId);
+      const target = document.getElementById(`pasaporte`);
+      if (target) target.scrollIntoView({ behavior: `smooth`, block: `start` });
+    }
+
+    function handleResetPrototype(btn) {
+      if (!btn) return;
+      if (btn.dataset.armed !== `true`) {
+        btn.dataset.armed = `true`;
+        btn.textContent = `Clic de nuevo para reiniciar`;
+        return;
+      }
+      btn.dataset.armed = `false`;
+      btn.innerHTML = `<i data-lucide="rotate-ccw" aria-hidden="true"></i><span>Reiniciar prototipo</span>`;
+      state = {
+        municipality: `Todos`,
+        lineFilter: `Todos`,
+        searchQuery: ``,
+        selectedProductId: `TC-USI-2026-001`,
+        pricingMode: `ajustado`,
+        customPrice: 115000,
+        cart: [{ id: `TC-USI-2026-001`, qty: 1 }],
+        shippingMethod: `Contra entrega Barranquilla / Área Metropolitana`,
+        feedFilter: `Todos`,
+        selectedPostId: `IG-01`
+      };
+      updateActivePills();
+      renderAll();
+      persistState();
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    function renderAll() {
+      updateActivePills();
+      renderCatalog();
+      renderPassport();
+      renderCart();
+      renderSocialFeed();
+    }
+
+    async function initApp() {
+      try {
+        if (window.notebookAppApi && typeof window.notebookAppApi.getAppState === `function`) {
+          const saved = await window.notebookAppApi.getAppState();
+          if (saved && typeof saved === `object`) {
+            state = {
+              municipality: saved.municipality || `Todos`,
+              lineFilter: saved.lineFilter || `Todos`,
+              searchQuery: saved.searchQuery || ``,
+              selectedProductId: saved.selectedProductId || `TC-USI-2026-001`,
+              pricingMode: saved.pricingMode || `ajustado`,
+              customPrice: Number(saved.customPrice) || 115000,
+              cart: Array.isArray(saved.cart) ? saved.cart : [{ id: `TC-USI-2026-001`, qty: 1 }],
+              shippingMethod: saved.shippingMethod || `Contra entrega Barranquilla / Área Metropolitana`,
+              feedFilter: saved.feedFilter || `Todos`,
+              selectedPostId: saved.selectedPostId || `IG-01`
+            };
+          }
+        }
+      } catch (e) {
+        // Fallback silently to default state
+      }
+
+      renderAll();
+      if (window.lucide && typeof window.lucide.createIcons === `function`) {
+        window.lucide.createIcons();
+      }
+      if (window.notebookAppApi && typeof window.notebookAppApi.notifyAppReady === `function`) {
+        window.notebookAppApi.notifyAppReady();
+      }
+    }
+
+    document.addEventListener(`DOMContentLoaded`, initApp);
+  </script>
 </body>
 </html>
