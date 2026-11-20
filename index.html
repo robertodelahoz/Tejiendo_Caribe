@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tejiendo Caribe | Pasaporte Digital QR & Artesanías de Origen</title>
+    <link href="[suspicious link removed]" rel="stylesheet">
+    <style>
+        :root {
+            --teal: #0F5C63;
+            --coral: #E4572E;
+            --sun: #F2B134;
+            --sea: #2A9D8F;
+            --dark: #1B2A2F;
+            --light: #F8F9FA;
+            --card-bg: #EAF3F2;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--light); color: var(--dark); line-height: 1.6; }
+        header { background: var(--teal); color: white; padding: 2.5rem 1rem; text-align: center; border-bottom: 5px solid var(--sun); }
+        header h1 { font-family: 'Cambria', serif; font-size: 2.5rem; margin-bottom: 0.5rem; }
+        header p { font-size: 1.1rem; opacity: 0.9; }
+        .container { max-width: 900px; margin: 2rem auto; padding: 0 1rem; }
+        .card { background: white; border-radius: 12px; padding: 2rem; margin-bottom: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 6px solid var(--teal); }
+        .hero { background: linear-gradient(135deg, var(--teal), var(--sea)); color: white; border-radius: 12px; padding: 2.5rem; text-align: center; margin-bottom: 2rem; }
+        .hero h2 { font-family: 'Cambria', serif; font-size: 2rem; margin-bottom: 1rem; color: var(--sun); }
+        .passport-box { background: var(--card-bg); border: 2px dashed var(--sea); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; }
+        .price-breakdown { width: 100%; margin-top: 1.5rem; border-collapse: collapse; }
+        .price-breakdown th, .price-breakdown td { padding: 10px; border-bottom: 1px solid #ddd; text-align: left; }
+        .price-breakdown th { background: var(--teal); color: white; }
+        .badge { background: var(--coral); color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: bold; display: inline-block; margin-bottom: 10px; }
+        .btn { display: inline-block; background: var(--coral); color: white; text-decoration: none; padding: 12px 20px; border-radius: 6px; font-weight: bold; text-align: center; width: 100%; box-sizing: border-box; margin-top: 1rem; transition: 0.3s; }
+        .btn:hover { background: #c0392b; }
+        footer { background: var(--dark); color: white; text-align: center; padding: 2rem 1rem; margin-top: 3rem; border-top: 4px solid var(--sun); }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Tejiendo Caribe</h1>
+        <p>Plataforma de Artesanías de Origen con Pasaporte Digital QR & Precio Transparente</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="hero">
+            <h2>Conecta directamente con las manos que tejen el Caribe</h2>
+            <p>Cada pieza física cuenta con una marquilla ecológica equipada con un Código QR de Trazabilidad. Garantizamos que el artesano reciba un pago justo y directo sin intermediación opaca.</p>
+        </div>
+
+        <!-- SECCIÓN PASAPORTE QR -->
+        <div class="card" id="pasaporte">
+            <span class="badge">VERIFICACIÓN DIGITAL ACTIVA</span>
+            <h2 style="font-family: 'Cambria', serif; color: var(--teal);">Pasaporte Digital QR de Autenticidad</h2>
+            <p>Has escaneado la etiqueta oficial de trazabilidad. A continuación se desglosa el origen certificado de esta pieza artesanal:</p>
+
+            <div class="passport-box">
+                <h3 style="color: var(--teal); margin-bottom: 0.5rem;">Ficha Técnica del Artesano</h3>
+                <p><strong>Maestra Artesana:</strong> Rosalba Mercado</p>
+                <p><strong>Taller:</strong> Tejedores de Usiacurí · Atlántico, Colombia</p>
+                <p><strong>Técnica:</strong> Tejido ancestral en Palma de Iraca sobre estructura metálica</p>
+                <p><strong>Tiempo de elaboración:</strong> 18 horas de tejido a mano</p>
+                <p><strong>Certificado de Autenticidad:</strong> #TC-USI-2026-0894</p>
+
+                <h4 style="margin-top: 1.5rem; color: var(--teal);">Transparencia de Precio Justo</h4>
+                <p>Desglose transparente de a dónde va tu dinero al comprar esta pieza:</p>
+                <table class="price-breakdown">
+                    <thead>
+                        <tr>
+                            <th>Concepto</th>
+                            <th>Porcentaje</th>
+                            <th>Monto (COP)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="font-weight: bold; background: #e8f5e9;">
+                            <td>Pago Directo al Artesano (Mano de Obra)</td>
+                            <td>65 %</td>
+                            <td>$74.750 COP</td>
+                        </tr>
+                        <tr>
+                            <td>Materia Prima (Palma de Iraca y Tintes)</td>
+                            <td>15 %</td>
+                            <td>$17.250 COP</td>
+                        </tr>
+                        <tr>
+                            <td>Empaque Ecológico y Logística de Origen</td>
+                            <td>8 %</td>
+                            <td>$9.200 COP</td>
+                        </tr>
+                        <tr>
+                            <td>Plataforma Tejiendo Caribe (Operación)</td>
+                            <td>12 %</td>
+                            <td>$13.800 COP</td>
+                        </tr>
+                        <tr style="font-weight: bold; background: #f0f0f0;">
+                            <td>PRECIO TOTAL AL COMPRADOR</td>
+                            <td>100 %</td>
+                            <td>$115.000 COP</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- CATÁLOGO -->
+        <div class="card" id="catalogo">
+            <h2 style="font-family: 'Cambria', serif; color: var(--teal); margin-bottom: 1rem;">Catálogo Destacado de Artesanías</h2>
+            <p><strong>1. Mochila Calada en Iraca (Usiacurí):</strong> $115.000 COP</p>
+            <p><strong>2. Máscara Ceiba Roja (Galapa):</strong> $95.000 COP</p>
+            <p><strong>3. Set de Individuales x4 (Usiacurí):</strong> $120.000 COP</p>
+            <a href="[suspicious link removed]" class="btn" target="_blank">Pedir por WhatsApp</a>
+        </div>
+
+        <!-- IMPACTO SOCIAL -->
+        <div class="card" id="impacto">
+            <h2 style="font-family: 'Cambria', serif; color: var(--teal); margin-bottom: 1rem;">Impacto Social & Académico</h2>
+            <p>Proyecto de innovación social desarrollado en la <strong>Universidad Simón Bolívar</strong> por Yefrey Navarro y Roberto De la Hoz para eliminar la intermediación opaca en la artesanía del Caribe colombiano.</p>
+        </div>
+
+    </div>
+
+    <footer>
+        <p><strong>Tejiendo Caribe © 2026</strong> · Universidad Simón Bolívar · Barranquilla, Colombia</p>
+        <p>Síguenos en Instagram: @tejiendocaribe.co</p>
+    </footer>
+
+</body>
+</html>
